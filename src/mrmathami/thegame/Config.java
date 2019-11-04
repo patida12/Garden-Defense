@@ -65,12 +65,21 @@ public final class Config {
 	//region Tower
 	public static final long NORMAL_TOWER_SPEED = 30;
 	public static final double NORMAL_TOWER_RANGE = 5.0;
+	public static final int NORMAL_TOWER_UPGRADE_TIME = 5000;
+	public static final int NORMAL_TOWER_UPGRADE_COST = 2;
+	public static final int NORMAL_TOWER_SELL_COST = 1;
 
 	public static final long MACHINE_GUN_TOWER_SPEED = 5;
 	public static final double MACHINE_GUN_TOWER_RANGE = 4.0;
+	public static final int MACHINE_TOWER_UPGRADE_TIME = 7000;
+	public static final int MACHINE_TOWER_UPGRADE_COST = 5;
+	public static final int MACHINE_TOWER_SELL_COST = 3;
 
 	public static final long SNIPER_TOWER_SPEED = 60;
 	public static final double SNIPER_TOWER_RANGE = 8.0;
+	public static final int SNIPER_TOWER_UPGRADE_TIME = 10000;
+	public static final int SNIPER_TOWER_UPGRADE_COST = 10;
+	public static final int SNIPER_TOWER_SELL_COST = 6;
 	//endregion
 
 	//region Enemy
@@ -79,24 +88,28 @@ public final class Config {
 	public static final long NORMAL_ENEMY_ARMOR = 3;
 	public static final double NORMAL_ENEMY_SPEED = 0.3;
 	public static final long NORMAL_ENEMY_REWARD = 1;
+	public static final int NORMAL_ENEMY_NODEDIRECTION = 1;
 
 	public static final double SMALLER_ENEMY_SIZE = 0.7;
 	public static final long SMALLER_ENEMY_HEALTH = 50;
 	public static final long SMALLER_ENEMY_ARMOR = 0;
 	public static final double SMALLER_ENEMY_SPEED = 0.4;
 	public static final long SMALLER_ENEMY_REWARD = 2;
+	public static final int SMALLER_ENEMY_NODEDIRECTION = 2;
 
 	public static final double TANKER_ENEMY_SIZE = 1.1;
 	public static final long TANKER_ENEMY_HEALTH = 300;
 	public static final long TANKER_ENEMY_ARMOR = 5;
 	public static final double TANKER_ENEMY_SPEED = 0.2;
 	public static final long TANKER_ENEMY_REWARD = 3;
+	public static final int TANKER_ENEMY_NODEDIRECTION = 3;
 
 	public static final double BOSS_ENEMY_SIZE = 1.3;
 	public static final long BOSS_ENEMY_HEALTH = 500;
 	public static final long BOSS_ENEMY_ARMOR = 8;
 	public static final double BOSS_ENEMY_SPEED = 0.3;
 	public static final long BOSS_ENEMY_REWARD = 10;
+	public static final int BOSS_ENEMY_NODEDIRECTION = 4;
 
 	public static final long ROAD_SIZE = 64;
 	//endregion

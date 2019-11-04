@@ -24,6 +24,7 @@ public final class Main extends Application {
 		final GameDrawer gd = new GameDrawer();
 
 		gd.render(graphicsContext);
+		
 
         // Tao root container
 		Group root = new Group();

@@ -38,7 +38,15 @@ public final class Main extends Application {
 		primaryStage.setResizable(false);
 		primaryStage.show();
 
+		/*AnimationTimer timer = new AnimationTimer() {
+			@Override
+			public void handle(long l) {
+				gd.render(graphicsContext);
 
+			}
+		};
+		timer.start();
+*/
 	}
 
 

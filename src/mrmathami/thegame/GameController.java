@@ -7,6 +7,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import mrmathami.thegame.drawer.GameDrawer;
+import mrmathami.thegame.entity.tile.tower.NormalTower;
 
 /**
  * A game controller. Everything about the game should be managed in here.
@@ -28,6 +29,7 @@ public final class GameController {
         this.graphicsContext = graphicsContext;
         game = GameStage.load("C:\\Users\\User\\Documents\\GitHub\\thegame-master\\Garden-Defense\\src\\stage\\demo.txt");
         field = new GameField(game);
+
         // Just a few acronyms.
         final long width = Config.TILE_HORIZONTAL;
         final long height = Config.TILE_VERTICAL;

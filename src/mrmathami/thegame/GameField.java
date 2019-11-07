@@ -23,6 +23,11 @@ public final class GameField {
         for (AbstractEntity entity : entities) {
             entity.update(); }
         System.out.println(entities.size());
+
+        /*if(--count == 0) {
+            entities.add(new NormalEnemy(896, 0, "DOWN", 1));
+            count = 50;
+        }*/
     }
 
     public final double getWidth() {

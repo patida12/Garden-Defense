@@ -1,4 +1,4 @@
-6
+7
 896 0
 Spawner
 Target 864 544
@@ -6,3 +6,5 @@ NormalEnemy DOWN 4
 SmallerEnemy DOWN 3
 TankerEnemy DOWN 3
 BossEnemy DOWN 1
+NormalTower 100 100
+

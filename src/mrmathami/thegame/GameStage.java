@@ -7,6 +7,7 @@ import mrmathami.thegame.entity.enemy.SmallerEnemy;
 import mrmathami.thegame.entity.enemy.TankerEnemy;
 import mrmathami.thegame.entity.tile.Spawner;
 import mrmathami.thegame.entity.tile.Target;
+import mrmathami.thegame.entity.tile.tower.NormalTower;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -106,11 +107,16 @@ public class GameStage {
                         final int xTarget = scanner.nextInt();
                         final int yTarget = scanner.nextInt();
                         entities.add(new Target(xTarget, yTarget));
+                    } else if ("NormalTower".equals(value)) {
+                        final int a = scanner.nextInt();
+                        final int b = scanner.nextInt();
+                        entities.add(new NormalTower(a, b));
                     } else {
                         System.out.println("Unexpected value! Input value: " + value);
                         scanner.nextLine();
     //						throw new InputMismatchException("Unexpected value! Input value: " + value);
                     }
+                   //entities.add(new NormalTower(100,100));
                 }
                 return new GameStage(entities);
             } catch (NoSuchElementException e) {

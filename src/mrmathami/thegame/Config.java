@@ -114,7 +114,7 @@ public final class Config {
 	public static final double SMALLER_ENEMY_SIZE = 0.7;
 	public static final long SMALLER_ENEMY_HEALTH = 50;
 	public static final long SMALLER_ENEMY_ARMOR = 0;
-	public static final double SMALLER_ENEMY_SPEED = 8;
+	public static final double SMALLER_ENEMY_SPEED = 2;
 	public static final long SMALLER_ENEMY_REWARD = 2;
 
 	public static final double TANKER_ENEMY_SIZE = 1.1;

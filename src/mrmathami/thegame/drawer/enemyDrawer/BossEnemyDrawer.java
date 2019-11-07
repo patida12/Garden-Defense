@@ -1,15 +1,18 @@
 package mrmathami.thegame.drawer.enemyDrawer;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import mrmathami.thegame.drawer.EntityDrawer;
+import mrmathami.thegame.drawer.LoadImage;
 
 import javax.annotation.Nonnull;
 
 public class BossEnemyDrawer implements EntityDrawer {
+    public BossEnemyDrawer(){}
+
     @Override
     public void draw(@Nonnull GraphicsContext graphicsContext, double screenPosX, double screenPosY, double screenWidth, double screenHeight) {
-        graphicsContext.drawImage(new Image("file:src/assets/images/bossEnemy.png"), screenPosX, screenPosY);
-
+        graphicsContext.drawImage(LoadImage.bossEnemy, screenPosX, screenPosY);
+       // graphicsContext.setFill(Color.RED);
+        //graphicsContext.fillOval(screenPosX, screenPosY,10, 10);
     }
 }

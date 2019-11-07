@@ -24,5 +24,4 @@ public interface GameEntity {
      */
     abstract double getHeight();
 
-
 }

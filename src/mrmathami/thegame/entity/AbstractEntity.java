@@ -1,5 +1,8 @@
 package mrmathami.thegame.entity;
 
+import javafx.scene.canvas.GraphicsContext;
+import mrmathami.thegame.GameField;
+
 public abstract class AbstractEntity implements GameEntity {
     private double X;
     private double Y;
@@ -7,16 +10,27 @@ public abstract class AbstractEntity implements GameEntity {
     private double height;
 
     protected AbstractEntity(double posX, double posY) {
-        this.X = posX + width/2;
-        this.Y = posY + height/2;
+        this.X = posX;
+        this.Y = posY;
     }
 
     protected AbstractEntity(double posX, double posY, double width, double height) {
-        this.X = posX + width/2;
-        this.Y = posY + height/2;
+        this.X = posX;
+        this.Y = posY;
         this.width = width;
         this.height = height;
     }
+
+    public  void createEntity(GameField gameField) {
+        gameField.addEntity(this);
+    };
+
+    public  void onDestroy(GameField gameField) {
+        gameField.removeEntity(this);
+    };
+
+    //public void draw(GraphicsContext graphicsContext) {};
+
 
     @Override
     public double getX() {
@@ -37,4 +51,18 @@ public abstract class AbstractEntity implements GameEntity {
     public double getHeight() {
         return height;
     }
+
+    public void setX(double x) {
+        this.X = x;
+    }
+
+    public void setY(double y) {
+        this.Y = y;
+    }
+
+    public void update(){
+
+    };
+
+    public void draw(GraphicsContext graphicsContext){};
 }

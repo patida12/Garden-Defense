@@ -1,7 +1,7 @@
 package mrmathami.thegame.drawer.mapDrawer;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
+import mrmathami.thegame.drawer.LoadImage;
 
 import java.io.IOException;
 
@@ -37,7 +37,8 @@ public class MapDrawer {
 
         for (int i = 0; i < MAP_SPRITES.length; i++) {
             for (int j = 0; j < MAP_SPRITES[i].length; j++) {
-                gc.drawImage(new Image("file:src/assets/images/rpgTile" + MAP_SPRITES[i][j] + ".png"), j * 32, i * 32, 32, 32);
+                int index = Integer.parseInt(MAP_SPRITES[i][j]);
+                gc.drawImage(LoadImage.map[index], j * 32, i * 32, 32, 32);
                 
                 //System.out.print(MAP_SPRITES[i][j] + " ");
             }

@@ -11,6 +11,7 @@ public abstract class AbstractTower extends AbstractTile {
         this.point = new Point(x, y);
     }
 
+
     public abstract void updateTower();
 
     //get+set

@@ -1,0 +1,11 @@
+3
+30
+Spawn 0 0
+Target 10 10
+1
+NormalEnemy 5
+1
+SmallerEnemy 4
+2
+NormalEnemy 5
+SmallerEnemy 4

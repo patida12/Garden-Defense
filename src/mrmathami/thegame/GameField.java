@@ -1,8 +1,11 @@
 package mrmathami.thegame;
 
+import javafx.event.EventHandler;
 import mrmathami.thegame.entity.AbstractEntity;
+import mrmathami.thegame.entity.tile.tower.NormalTower;
 
 import javax.annotation.Nonnull;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public final class GameField {
@@ -20,6 +23,7 @@ public final class GameField {
     }
 
     public void update(){
+
         for (AbstractEntity entity : entities) {
             entity.update(); }
         System.out.println(entities.size());
@@ -44,4 +48,6 @@ public final class GameField {
 
     public void addEntity(AbstractEntity entity){entities.add(entity);}
     public void removeEntity(AbstractEntity entity){entities.remove(entity);}
+
+
 }

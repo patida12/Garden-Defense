@@ -3,11 +3,15 @@ package mrmathami.thegame;
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleLongProperty;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.MouseEvent;
 import mrmathami.thegame.drawer.GameDrawer;
 import mrmathami.thegame.entity.tile.tower.NormalTower;
+
+import java.awt.*;
 
 /**
  * A game controller. Everything about the game should be managed in here.
@@ -16,7 +20,7 @@ public final class GameController {
 
     private final GraphicsContext graphicsContext;
     private GameStage game = new GameStage();
-    private  Scene gameScene;
+    Scene gameScene;
     private GameField field = new GameField(game);
     private Group enemyLayer;
     private  AnimationTimer gameLoop;
@@ -24,10 +28,14 @@ public final class GameController {
 
     
 
-    public GameController(GraphicsContext graphicsContext) {
+    public GameController(GraphicsContext graphicsContext, Scene scene) {
         // The screen to draw on
         this.graphicsContext = graphicsContext;
-        game = GameStage.load("C:\\Users\\User\\Documents\\GitHub\\thegame-master\\Garden-Defense\\src\\stage\\demo.txt");
+        this.gameScene = scene;
+        game = GameStage.load("E:\\NotmyCode\\DanGioi\\Garden-Defense\\src\\stage\\demo.txt");
+        ////////////////////
+
+        ////////////////////
         field = new GameField(game);
 
         // Just a few acronyms.
@@ -63,6 +71,20 @@ public final class GameController {
         final LongProperty fpstimer = new SimpleLongProperty(0);
         this.drawer = new GameDrawer(graphicsContext, field);
 
+        /*Them tower*/
+
+        final int[] typeTower = {0};
+        gameScene.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
+            @Override
+            public void handle(javafx.scene.input.MouseEvent mouseEvent) {
+                double posX = mouseEvent.getX();
+                double posY = mouseEvent.getY();
+                if (posX < 100 && posY < 100) typeTower[0] = 1;
+                if (posX > 100 && posY > 100 && typeTower[0] == 1) field.addEntity(new NormalTower(posX, posY));
+            }
+        });
+
+        /////////////////////////////////////////////////////////
         final AnimationTimer timer = new AnimationTimer() {
             int timer = 10;
             @Override
@@ -73,4 +95,7 @@ public final class GameController {
         gameLoop = timer;
         timer.start();
     }
+
+
+
 }

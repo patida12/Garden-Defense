@@ -25,7 +25,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="towerdefense" options="--add-exports=jdk.internal.vm.compiler/org.graalvm.compiler.options=towerdefense" />
+      <module name="towerdefense" options="" />
     </option>
   </component>
 </project>

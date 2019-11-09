@@ -1,11 +1,14 @@
 package mrmathami.thegame;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import mrmathami.thegame.entity.tile.tower.NormalTower;
 
 /**
  * Main class. Entry point of the game.
@@ -19,15 +22,18 @@ public final class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		final Canvas canvas = new Canvas(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
-		final GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
-        final GameController gameController = new GameController(graphicsContext);
-
-        // Tao root container
+		// Tao root container
 		Group root = new Group();
 		root.getChildren().add(canvas);
 
 		// Tao scene
 		Scene scene = new Scene(root);
+		final GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
+        final GameController gameController = new GameController(graphicsContext, scene);
+
+
+
+
 
 		// Them scene vao stage
 		primaryStage.setScene(scene);
@@ -37,6 +43,7 @@ public final class Main extends Application {
 
 
 	}
+
 }
 /*
 

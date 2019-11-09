@@ -49,4 +49,5 @@ public final class GameField {
     public static void removeEntity(AbstractEntity entity){
         entities.set(entities.indexOf(entity), null);
     }
+
 }

@@ -21,16 +21,13 @@ public abstract class AbstractEntity implements GameEntity {
         this.height = height;
     }
 
-    public  void createEntity(GameField gameField) {
-        gameField.addEntity(this);
+    public void createEntity() {
+        GameField.addEntity(this);
     };
 
-    public  void onDestroy(GameField gameField) {
-        gameField.removeEntity(this);
+    public void onDestroy() {
+        GameField.removeEntity(this);
     };
-
-    //public void draw(GraphicsContext graphicsContext) {};
-
 
     @Override
     public double getX() {

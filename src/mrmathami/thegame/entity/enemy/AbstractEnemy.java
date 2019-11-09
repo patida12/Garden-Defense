@@ -1,22 +1,20 @@
 package mrmathami.thegame.entity.enemy;
 
 import javafx.scene.canvas.GraphicsContext;
-import mrmathami.thegame.GameField;
 import mrmathami.thegame.entity.AbstractEntity;
 
 public abstract class AbstractEnemy extends AbstractEntity {
-    private long numOfSpawn;
-    private long health;
-    private long armor;
-    private double speed;
-    private long reward;
-    private int nodeDirection = 0;
-    private boolean moveX;
-    private boolean isDead = false;
-    private boolean pathFinished = false;
+     long numOfSpawn;
+     long health;
+     long armor;
+     double speed;
+     long reward;
+     int nodeDirection = 0;
+     boolean moveX;
+     boolean isDead = false;
+     boolean pathFinished = false;
     int nodeDi = 0;
     int rotation;
-
 
     protected AbstractEnemy(double posX, double posY, double size, long numOfSpawn, long health, long armor, double speed, long reward) {
         super(posX, posY, size, size);
@@ -54,16 +52,6 @@ public abstract class AbstractEnemy extends AbstractEntity {
         return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
     }
 
-    @Override
-    public void createEntity(GameField gameField) {
-        gameField.addEntity(this);
-    }
-
-    @Override
-    public void onDestroy(GameField gameField) {
-        if (this.isDead() || this.isPathFinished()) gameField.removeEntity(this);
-    }
-
     public abstract void update() ;
 
     public void draw(GraphicsContext graphicsContext) {};
@@ -92,6 +80,10 @@ public abstract class AbstractEnemy extends AbstractEntity {
 
     public long getReward() {
         return reward;
+    }
+
+    public long getNumOfSpawn() {
+        return numOfSpawn;
     }
 
     public int getNodeDirection() {

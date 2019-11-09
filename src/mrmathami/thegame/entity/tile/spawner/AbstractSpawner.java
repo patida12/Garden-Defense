@@ -1,6 +1,5 @@
 package mrmathami.thegame.entity.tile.spawner;
 
-import mrmathami.thegame.GameField;
 import mrmathami.thegame.entity.AbstractEntity;
 
 public abstract class AbstractSpawner extends AbstractEntity {
@@ -12,13 +11,4 @@ public abstract class AbstractSpawner extends AbstractEntity {
         this.numOfSpawn = numOfSpawn;
     }
 
-    @Override
-    public void createEntity(GameField gameField) {
-
-    }
-
-    @Override
-    public void onDestroy(GameField gameField) {
-
-    }
 }

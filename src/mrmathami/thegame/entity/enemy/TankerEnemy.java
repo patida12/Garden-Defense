@@ -26,23 +26,21 @@ public class TankerEnemy extends AbstractEnemy {
 
 
     public void calculateDirection() {
-
-        if (nodeDirection >= Path.path.length) {
-            super.setPathFinished(true);
-            return;
-        }
-
         Point currentWP = Path.path[nodeDirection];
 
         //System.out.println(distance(getX(), getY(), currentWP.getExactX(), currentWP.getExactY()) +" getx= " + getX() + " get y= "+getY() + " currx= " + currentWP.getExactX() + " cuurY= " + currentWP.getExactY());
         if (distance(getX(), getY(), currentWP.getExactX(), currentWP.getExactY()) <= 5) {
             setX(currentWP.getExactX());
             setY(currentWP.getExactY());
+
             Point nextWayPoint = getNextWayPoint();
+            if (nextWayPoint == null) {
+                setPathFinished(true);
+                super.isDead = true;
+                return;
+            }
 
-            if (nextWayPoint == null) return;
             double deltaX = nextWayPoint.getExactX() - getX();
-
             double deltaY = nextWayPoint.getExactY() - getY();
 
             if (deltaX > Config.TANKER_ENEMY_SPEED) setDirection(Direction.RIGHT);
@@ -73,6 +71,9 @@ public class TankerEnemy extends AbstractEnemy {
                     setX(getX() + Config.TANKER_ENEMY_SPEED);
                     break;
             }
+        }
+        if (this.isDead() || this.isPathFinished()) {
+            onDestroy();
         }
     }
 

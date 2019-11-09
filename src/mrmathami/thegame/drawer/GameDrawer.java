@@ -28,7 +28,7 @@ public final class GameDrawer {
     public void render() {
         renderMap();
         gameField.update();
-       for ( AbstractEntity entity : gameField.getEntities()) {
+       for ( AbstractEntity entity : GameField.entities) {
 
            AbstractEntity lastEntity = null;
            if (lastEntity != null) continue;

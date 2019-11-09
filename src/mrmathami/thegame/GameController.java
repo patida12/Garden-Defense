@@ -7,7 +7,10 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import mrmathami.thegame.drawer.GameDrawer;
-import mrmathami.thegame.entity.tile.tower.NormalTower;
+import mrmathami.thegame.entity.enemy.AbstractEnemy;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * A game controller. Everything about the game should be managed in here.
@@ -62,11 +65,29 @@ public final class GameController {
         final LongProperty secondUpdate = new SimpleLongProperty(0);
         final LongProperty fpstimer = new SimpleLongProperty(0);
         this.drawer = new GameDrawer(graphicsContext, field);
+        ArrayList<AbstractEnemy> enemies = game._enemies;System.out.println(enemies.size());
+        Iterator iterator = enemies.iterator();
 
         final AnimationTimer timer = new AnimationTimer() {
-            int timer = 10;
+            int timer = Config.WAITING_TIME;
+            int index = 0;
             @Override
             public void handle(long timestamp) {
+
+                if (timestamp/ 1000000000 != secondUpdate.get()) {
+                    timer--;
+                    if(timer >= Config.ENEMY_DURATION_SPAWN && index < enemies.size()) {
+                        //System.out.println(" timer> duration");
+                        GameField.addEntity(enemies.get(index++));
+                    }
+                    else if(timer <= 0 && index < enemies.size()){
+                        //System.out.println(" timer <= 0");
+                        GameField.addEntity(enemies.get(index));
+                        timer = (int) (Config.ENEMY_DURATION_SPAWN + enemies.get(index++).getNumOfSpawn());
+                    }
+                }
+                fpstimer.set(timestamp / 10000000);
+                secondUpdate.set(timestamp / 1000000000);
                 drawer.render();
             }
         };

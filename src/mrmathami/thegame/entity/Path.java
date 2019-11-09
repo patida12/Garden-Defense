@@ -1,6 +1,7 @@
 package mrmathami.thegame.entity;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class Path {
     public static final Point[] path = new Point[] {
@@ -18,8 +19,8 @@ public class Path {
 
     public static void drawPath(GraphicsContext graphicsContext) {
         for(Point point : path) {
-           // graphicsContext.setFill(Color.RED);
-           // graphicsContext.fillOval(point.getTileX(), point.getTileY(),10, 10);
+            graphicsContext.setFill(Color.RED);
+            graphicsContext.fillOval(point.getTileX(), point.getTileY(),10, 10);
         }
     }
 

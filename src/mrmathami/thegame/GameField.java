@@ -4,10 +4,11 @@ import mrmathami.thegame.entity.AbstractEntity;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public final class GameField {
-    public static int count = 50;
-    @Nonnull private  ArrayList<AbstractEntity> entities;
+    @Nonnull public static  ArrayList<AbstractEntity> entities = new ArrayList<AbstractEntity>();
+    Iterator iterator;
 
     private final double width;
 
@@ -16,18 +17,22 @@ public final class GameField {
     public GameField( @Nonnull GameStage gameStage) {
         this.width = gameStage.getWidth();
         this.height = gameStage.getHeight();
-        this.entities = gameStage.getEntities();
+        entities.addAll(gameStage._entities);
     }
 
     public void update(){
-        for (AbstractEntity entity : entities) {
-            entity.update(); }
-        System.out.println(entities.size());
+        iterator = entities.iterator();
+        while(iterator.hasNext()) {
+            AbstractEntity entity = (AbstractEntity) iterator.next();
+            if( entity == null) {
+                iterator.remove();
+                continue;
+            }
+            entity.update();
+        }
 
-        /*if(--count == 0) {
-            entities.add(new NormalEnemy(896, 0, "DOWN", 1));
-            count = 50;
-        }*/
+        //System.out.println(entities.size());
+
     }
 
     public final double getWidth() {
@@ -38,10 +43,10 @@ public final class GameField {
         return height;
     }
 
-    @Nonnull public final ArrayList<AbstractEntity> getEntities() {
-        return entities;
+    public static void addEntity(AbstractEntity entity) {
+        entities.add(entity);
     }
-
-    public void addEntity(AbstractEntity entity){entities.add(entity);}
-    public void removeEntity(AbstractEntity entity){entities.remove(entity);}
+    public static void removeEntity(AbstractEntity entity){
+        entities.set(entities.indexOf(entity), null);
+    }
 }

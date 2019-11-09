@@ -1,6 +1,5 @@
 package mrmathami.thegame.entity.bullet;
 
-import mrmathami.thegame.GameField;
 import mrmathami.thegame.entity.AbstractEntity;
 
 public abstract class AbstractBullet extends AbstractEntity {
@@ -8,8 +7,4 @@ public abstract class AbstractBullet extends AbstractEntity {
         super( posX, posY, 0.2, 0.2);
     }
 
-    @Override
-    public void onDestroy(GameField gameField) {
-
-    }
 }

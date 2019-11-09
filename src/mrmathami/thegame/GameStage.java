@@ -1,10 +1,7 @@
 package mrmathami.thegame;
 
 import mrmathami.thegame.entity.AbstractEntity;
-import mrmathami.thegame.entity.enemy.BossEnemy;
-import mrmathami.thegame.entity.enemy.NormalEnemy;
-import mrmathami.thegame.entity.enemy.SmallerEnemy;
-import mrmathami.thegame.entity.enemy.TankerEnemy;
+import mrmathami.thegame.entity.enemy.*;
 import mrmathami.thegame.entity.tile.Spawner;
 import mrmathami.thegame.entity.tile.Target;
 import mrmathami.thegame.entity.tile.tower.NormalTower;
@@ -21,46 +18,24 @@ import java.util.Scanner;
 
 public class GameStage {
     private static GameStage playerGame;
-    @Nonnull private ArrayList<AbstractEntity> entities = new ArrayList<>();
     private int stage;
     private int wave;
     private int score;
     private int health;
     private long width;
     private long height;
+    @Nonnull public static ArrayList<AbstractEnemy> _enemies = new ArrayList<AbstractEnemy>();
+    @Nonnull public static ArrayList<AbstractEntity> _entities = new ArrayList<AbstractEntity>();
     private Spawner spawner;
     private Target target;
-   
 
-     public GameStage() {
+    public GameStage() {
         this.stage = Config.IS_RUNNING;
         this.wave = 0;
         this.score = 0;
         this.health = 0;
         this.width = Config.SCREEN_WIDTH;
         this.height = Config.SCREEN_HEIGHT;
-    }
-
-    GameStage(@Nonnull ArrayList<AbstractEntity> entities) {
-        this.stage = Config.IS_RUNNING;
-        this.wave = 0;
-        this.score = 0;
-        this.health = 0;
-        this.width = Config.SCREEN_WIDTH;
-        this.height = Config.SCREEN_HEIGHT;
-        this.entities = entities;
-    }
-
-    private GameStage(int health, ArrayList<AbstractEntity> entities, Spawner spawner, Target target) {
-        this.stage = Config.IS_RUNNING;
-        this.wave = wave;
-        this.score = 0;
-        this.health = health;
-        this.width = Config.SCREEN_WIDTH;
-        this.height = Config.SCREEN_HEIGHT;
-        this.entities = entities;
-        this.spawner = spawner;
-        this.target = target;
     }
 
     public static GameStage getNewgame() throws NullPointerException {
@@ -81,44 +56,42 @@ public class GameStage {
                 final int numOfLine = scanner.nextInt();
                 final int x = scanner.nextInt();
                 final int y = scanner.nextInt();
-                final ArrayList<AbstractEntity> entities = new ArrayList<>();
 
                 for (int i = 0; i < numOfLine; i++) {
                     final String value = scanner.next();
                     if ("Spawner".equals(value)) {
-                        entities.add(new Spawner(x, y));
+                        _entities.add(new Spawner(x, y));
                     } else if ("NormalEnemy".equals(value)) {
                         final String direction = scanner.next();
-                        final int numOfSpawn = scanner.nextInt();
-                        entities.add(new NormalEnemy(x, y, direction, numOfSpawn));
+                        int numOfSpawn = scanner.nextInt();
+                        while(--numOfSpawn >= 0) _enemies.add(new NormalEnemy(x, y, direction, numOfSpawn));
                     } else if ("SmallerEnemy".equals(value)) {
                         final String direction = scanner.next();
-                        final int numOfSpawn = scanner.nextInt();
-                        entities.add(new SmallerEnemy(x, y, direction, numOfSpawn));
+                        int numOfSpawn = scanner.nextInt();
+                        while(--numOfSpawn >= 0) _enemies.add(new SmallerEnemy(x, y, direction, numOfSpawn));
                     } else if ("TankerEnemy".equals(value)) {
                         final String direction = scanner.next();
-                        final int numOfSpawn = scanner.nextInt();
-                        entities.add(new TankerEnemy(x, y, direction, numOfSpawn));
+                        int numOfSpawn = scanner.nextInt();
+                        while(--numOfSpawn >= 0) _enemies.add(new TankerEnemy(x, y, direction, numOfSpawn));
                     } else if ("BossEnemy".equals(value)) {
                         final String direction = scanner.next();
-                        final int numOfSpawn = scanner.nextInt();
-                        entities.add(new BossEnemy(x, y, direction, numOfSpawn));
+                        int numOfSpawn = scanner.nextInt();
+                        while(--numOfSpawn >= 0) _enemies.add(new BossEnemy(x, y, direction, numOfSpawn));
                     } else if ("Target".equals(value)) {
                         final int xTarget = scanner.nextInt();
                         final int yTarget = scanner.nextInt();
-                        entities.add(new Target(xTarget, yTarget));
+                        _entities.add(new Target(xTarget, yTarget));
                     } else if ("NormalTower".equals(value)) {
                         final int a = scanner.nextInt();
                         final int b = scanner.nextInt();
-                        entities.add(new NormalTower(a, b));
+                        _entities.add(new NormalTower(a, b));
                     } else {
                         System.out.println("Unexpected value! Input value: " + value);
                         scanner.nextLine();
     //						throw new InputMismatchException("Unexpected value! Input value: " + value);
                     }
-                   //entities.add(new NormalTower(100,100));
                 }
-                return new GameStage(entities);
+                return new GameStage();
             } catch (NoSuchElementException e) {
                 throw new IOException("Resource invalid! Resource name: " + name, e);
             }
@@ -127,12 +100,6 @@ public class GameStage {
         }
         return null;
     }
-
-    @Nonnull
-    public ArrayList<AbstractEntity> getEntities() {
-        return entities;
-    }
-
 
     public boolean isPaused(){
         return stage == Config.IS_PAUSED;

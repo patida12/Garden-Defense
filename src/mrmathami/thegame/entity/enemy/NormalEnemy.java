@@ -2,6 +2,7 @@ package mrmathami.thegame.entity.enemy;
 
 import javafx.scene.canvas.GraphicsContext;
 import mrmathami.thegame.Config;
+import mrmathami.thegame.GameField;
 import mrmathami.thegame.drawer.enemyDrawer.NormalEnemyDrawer;
 import mrmathami.thegame.entity.Path;
 import mrmathami.thegame.entity.Point;
@@ -18,6 +19,12 @@ public class NormalEnemy extends AbstractEnemy {
         this.direction = setDirection(direction);
     }
 
+    public void createEnemy(GameField gameField) {
+        while(super.numOfSpawn-- == 0) {
+            gameField.addEntity(this);
+        }
+    }
+
     public Point getNextWayPoint() {
         if (nodeDirection < Path.path.length - 1)
             return Path.path[++nodeDirection];
@@ -27,23 +34,21 @@ public class NormalEnemy extends AbstractEnemy {
 
 
     public void calculateDirection() {
-
-        if (nodeDirection >= Path.path.length) {
-            super.setPathFinished(true);
-            return;
-        }
-
         Point currentWP = Path.path[nodeDirection];
 
         //System.out.println(distance(getX(), getY(), currentWP.getExactX(), currentWP.getExactY()) +" getx= " + getX() + " get y= "+getY() + " currx= " + currentWP.getExactX() + " cuurY= " + currentWP.getExactY());
         if (distance(getX(), getY(), currentWP.getExactX(), currentWP.getExactY()) <= 5) {
             setX(currentWP.getExactX());
             setY(currentWP.getExactY());
+
             Point nextWayPoint = getNextWayPoint();
+            if (nextWayPoint == null) {
+                setPathFinished(true);
+                super.isDead = true;
+                return;
+            }
 
-            if (nextWayPoint == null) return;
             double deltaX = nextWayPoint.getExactX() - getX();
-
             double deltaY = nextWayPoint.getExactY() - getY();
 
             if (deltaX > Config.NORMAL_ENEMY_SPEED) setDirection(Direction.RIGHT);
@@ -74,6 +79,9 @@ public class NormalEnemy extends AbstractEnemy {
                     setX(getX() + Config.NORMAL_ENEMY_SPEED);
                     break;
             }
+        }
+        if (this.isDead() || this.isPathFinished()) {
+            onDestroy();
         }
     }
 

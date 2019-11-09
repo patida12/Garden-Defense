@@ -8,9 +8,9 @@ public class LoadImage {
     public static Image bossEnemy = new Image("file:src/assets/images/bossEnemy.png");
     public static Image smallerEnemyDrawer = new Image("file:src/assets/images/smallerEnemy.png");
     public static Image tankerEnemy = new Image("file:src/assets/images/tankerEnemy.png");
-    public static Image machineGunTower = new Image("file:src/assets/images/tankerEnemy.png");
-    public static Image normalTower = new Image("file:src/assets/images/tankerEnemy.png");
-    public static Image sniperTower = new Image("file:src/assets/images/tankerEnemy.png");
+    public static Image machineGunTower = new Image("file:src/assets/images/machineGunTower.png");
+    public static Image normalTower = new Image("file:src/assets/images/normalTower.png");
+    public static Image sniperTower = new Image("file:src/assets/images/sniperTower.png");
     public static Image machineGunBullet = new Image("file:src/assets/images/tankerEnemy.png");
     public static Image sniperBullet = new Image("file:src/assets/images/tankerEnemy.png");
     public static Image normalBullet = new Image("file:src/assets/images/tankerEnemy.png");

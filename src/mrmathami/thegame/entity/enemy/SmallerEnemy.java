@@ -12,8 +12,6 @@ public class SmallerEnemy extends AbstractEnemy {
     SmallerEnemyDrawer drawer = new SmallerEnemyDrawer();
     int nodeDirection = 0;
 
-
-
     public SmallerEnemy(double posX, double posY, String direction, long numOfSpawn) {
         super(posX, posY,  Config.SMALLER_ENEMY_SIZE, numOfSpawn, Config.SMALLER_ENEMY_HEALTH, Config.SMALLER_ENEMY_ARMOR, Config.SNIPER_BULLET_SPEED, Config.SMALLER_ENEMY_REWARD);
         this.direction = setDirection(direction);
@@ -29,23 +27,21 @@ public class SmallerEnemy extends AbstractEnemy {
 
 
     public void calculateDirection() {
-
-        if (nodeDirection >= Path.path.length) {
-            super.setPathFinished(true);
-            return;
-        }
-
         Point currentWP = Path.path[nodeDirection];
 
         //System.out.println(distance(getX(), getY(), currentWP.getExactX(), currentWP.getExactY()) +" getx= " + getX() + " get y= "+getY() + " currx= " + currentWP.getExactX() + " cuurY= " + currentWP.getExactY());
         if (distance(getX(), getY(), currentWP.getExactX(), currentWP.getExactY()) <= 5) {
             setX(currentWP.getExactX());
             setY(currentWP.getExactY());
+
             Point nextWayPoint = getNextWayPoint();
+            if (nextWayPoint == null) {
+                setPathFinished(true);
+                super.isDead = true;
+                return;
+            }
 
-            if (nextWayPoint == null) return;
             double deltaX = nextWayPoint.getExactX() - getX();
-
             double deltaY = nextWayPoint.getExactY() - getY();
 
             if (deltaX > Config.SMALLER_ENEMY_SPEED) setDirection(Direction.RIGHT);
@@ -59,25 +55,28 @@ public class SmallerEnemy extends AbstractEnemy {
 
     @Override
     public void update() {
-        {
-            calculateDirection();
+        calculateDirection();
 
-            switch (getDirection()) {
-                case UP:
-                    setY(getY() - Config.SMALLER_ENEMY_SPEED);
-                    break;
-                case DOWN:
-                    setY(getY() + Config.SMALLER_ENEMY_SPEED);
-                    break;
-                case LEFT:
-                    setX(getX() - Config.SMALLER_ENEMY_SPEED);
-                    break;
-                case RIGHT:
-                    setX(getX() + Config.SMALLER_ENEMY_SPEED);
-                    break;
-            }
+        switch (getDirection()) {
+            case UP:
+                setY(getY() - Config.SMALLER_ENEMY_SPEED);
+                break;
+            case DOWN:
+                setY(getY() + Config.SMALLER_ENEMY_SPEED);
+                break;
+            case LEFT:
+                setX(getX() - Config.SMALLER_ENEMY_SPEED);
+                break;
+            case RIGHT:
+                setX(getX() + Config.SMALLER_ENEMY_SPEED);
+                break;
+        }
+        if (this.isDead() || this.isPathFinished()) {
+            onDestroy();
         }
     }
+
+
 
     public Direction getDirection() {
         return direction;

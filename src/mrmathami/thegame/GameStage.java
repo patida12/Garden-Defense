@@ -1,6 +1,7 @@
 package mrmathami.thegame;
 
 import mrmathami.thegame.entity.AbstractEntity;
+import mrmathami.thegame.entity.Point;
 import mrmathami.thegame.entity.enemy.*;
 import mrmathami.thegame.entity.tile.Spawner;
 import mrmathami.thegame.entity.tile.Target;
@@ -26,6 +27,8 @@ public class GameStage {
     private long height;
     @Nonnull public static ArrayList<AbstractEnemy> _enemies = new ArrayList<AbstractEnemy>();
     @Nonnull public static ArrayList<AbstractEntity> _entities = new ArrayList<AbstractEntity>();
+    public static String[][] Map = new String[Config.TILE_VERTICAL][Config.TILE_HORIZONTAL];
+    public static ArrayList<Point> path = new ArrayList<Point>();
     private Spawner spawner;
     private Target target;
 
@@ -53,6 +56,28 @@ public class GameStage {
             if (stream == null) throw new IOException("Resource not found! Resource name: " + name);
             final Scanner scanner = new Scanner(stream);
             try {
+                /**
+                 * Load Map
+                 * map 20 x 30
+                 */
+                for (int i = 0; i < Config.TILE_VERTICAL; i++){
+                    String[] _row = scanner.nextLine().split("\\s");
+                    for (int j = 0; j < Config.TILE_HORIZONTAL; j++) {
+                        Map[i][j] = _row[j];
+                    }
+                }
+
+                /**
+                 * Load Path
+                 */
+                final int numOfPoint = scanner.nextInt();
+                for (int i = 0; i < numOfPoint; i++){
+                    path.add(new Point(scanner.nextInt(), scanner.nextInt()));
+                }
+
+                /**
+                 * Load Entities
+                 */
                 final int numOfLine = scanner.nextInt();
                 final int x = scanner.nextInt();
                 final int y = scanner.nextInt();

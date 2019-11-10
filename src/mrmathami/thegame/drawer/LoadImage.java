@@ -16,6 +16,7 @@ public class LoadImage {
     public static Image normalBullet = new Image("file:src/assets/images/tankerEnemy.png");
     public static Image target = new Image("file:src/assets/images/target.png");
     public static Image spawner = new Image("file:src/assets/images/spawner.png");
+    public static Image startMenu = new Image("file:src/assets/images/startMenu.png");
 
 
     public static void Map() {

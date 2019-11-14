@@ -46,6 +46,16 @@ public abstract class AbstractEntity implements GameEntity {
     }
 
     @Override
+    public double getCenterX() {
+        return X + width/2;
+    }
+
+    @Override
+    public double getCenterY() {
+        return Y + height/2;
+    }
+
+    @Override
     public double getWidth() {
         return width;
     }

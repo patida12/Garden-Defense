@@ -7,7 +7,7 @@ import mrmathami.thegame.entity.Path;
 import mrmathami.thegame.entity.Point;
 
 public class TankerEnemy extends AbstractEnemy {
-    private Direction direction;
+    //private Direction direction;
     TankerEnemyDrawer drawer = new TankerEnemyDrawer();
     int nodeDirection = 0;
 

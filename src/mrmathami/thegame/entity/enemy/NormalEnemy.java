@@ -8,7 +8,7 @@ import mrmathami.thegame.entity.Path;
 import mrmathami.thegame.entity.Point;
 
 public class NormalEnemy extends AbstractEnemy {
-    private Direction direction;
+    //private Direction direction;
     NormalEnemyDrawer drawer = new NormalEnemyDrawer();
     int nodeDirection = 0;
 

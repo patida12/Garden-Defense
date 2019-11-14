@@ -14,6 +14,10 @@ public interface GameEntity {
      */
     abstract double getY();
 
+    abstract double getCenterX();
+
+    abstract double getCenterY();
+
     /**
      * @return field width
      */

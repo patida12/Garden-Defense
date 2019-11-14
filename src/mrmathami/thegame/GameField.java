@@ -24,14 +24,12 @@ public final class GameField {
     }
 
     public void update(){
-        iterator = entities.iterator();
-        while(iterator.hasNext()) {
-            AbstractEntity entity = (AbstractEntity) iterator.next();
-            if( entity == null) {
-                iterator.remove();
+        for (int i = entities.size() - 1; i >= 0; i--) {
+            if( entities.get(i) == null) {
                 continue;
             }
-            entity.update();
+            else
+                entities.get(i).update();
         }
 
         //System.out.println(entities.size());
@@ -50,7 +48,7 @@ public final class GameField {
         entities.add(entity);
     }
     public static void removeEntity(AbstractEntity entity){
-        entities.set(entities.indexOf(entity), null);
+        entities.remove(entity);
     }
 
 }

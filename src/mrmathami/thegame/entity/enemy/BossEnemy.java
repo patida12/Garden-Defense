@@ -8,7 +8,7 @@ import mrmathami.thegame.entity.Point;
 
 public class BossEnemy extends AbstractEnemy {
 
-    private Direction direction;
+   // private Direction direction;
 
     int nodeDirection = 0;
 

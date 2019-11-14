@@ -15,6 +15,7 @@ public abstract class AbstractEnemy extends AbstractEntity {
      boolean pathFinished = false;
     int nodeDi = 0;
     int rotation;
+    protected Direction direction;
 
     protected AbstractEnemy(double posX, double posY, double size, long numOfSpawn, long health, long armor, double speed, long reward) {
         super(posX, posY, size, size);
@@ -96,6 +97,23 @@ public abstract class AbstractEnemy extends AbstractEntity {
 
     public int getRotation() {
         return rotation;
+    }
+
+    public Direction getDirection() {return this.direction;}
+
+    public String getDirectionStr(){
+        switch (getDirection()) {
+            case UP:
+                return "UP";
+            case DOWN:
+                return "DOWN";
+            case LEFT:
+                return "LEFT";
+            case RIGHT:
+                return "RIGHT";
+            default:
+                return null;
+        }
     }
 
     public boolean isDead() { return isDead;}

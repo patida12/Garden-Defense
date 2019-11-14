@@ -55,8 +55,8 @@ public final class GameController {
         final long height = Config.TILE_VERTICAL;
 
         startGameLoop();
-        canvas.setOnMouseClicked(this::handleEvent);
-        //canvas.setOnMouseDragged(this::handleEvent);
+        canvas.setOnMousePressed(this::handleEvent);
+        canvas.setOnMouseDragged(this::handleEvent);
 
         primaryStage.setScene(gameScene);
         primaryStage.setTitle("Garden Defense");

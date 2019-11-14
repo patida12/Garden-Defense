@@ -1,6 +1,7 @@
 package mrmathami.thegame.entity;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.shape.Rectangle;
 import mrmathami.thegame.GameField;
 
 public abstract class AbstractEntity implements GameEntity {
@@ -8,6 +9,7 @@ public abstract class AbstractEntity implements GameEntity {
     private double Y;
     private double width;
     private double height;
+    protected Rectangle rectangle = new Rectangle();
 
     protected AbstractEntity(double posX, double posY) {
         this.X = posX;
@@ -19,11 +21,15 @@ public abstract class AbstractEntity implements GameEntity {
         this.Y = posY;
         this.width = width;
         this.height = height;
+        this.rectangle.setX(posX);
+        this.rectangle.setY(posY);
+        this.rectangle.setWidth(width);
+        this.rectangle.setHeight(height);
     }
 
-    public void createEntity() {
-        GameField.addEntity(this);
-    };
+//    public void createEntity() {
+//        GameField.addEntity(this);
+//    };
 
     public void onDestroy() {
         GameField.removeEntity(this);

@@ -1,11 +1,15 @@
 package mrmathami.thegame;
 
-import mrmathami.thegame.entity.AbstractEntity;
 import mrmathami.thegame.entity.Point;
 import mrmathami.thegame.entity.enemy.*;
+import mrmathami.thegame.entity.tile.Mountain;
+import mrmathami.thegame.entity.tile.Road;
 import mrmathami.thegame.entity.tile.Spawner;
 import mrmathami.thegame.entity.tile.Target;
+import mrmathami.thegame.entity.tile.tower.AbstractTower;
+import mrmathami.thegame.entity.tile.tower.MachineGunTower;
 import mrmathami.thegame.entity.tile.tower.NormalTower;
+import mrmathami.thegame.entity.tile.tower.SniperTower;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -26,7 +30,9 @@ public class GameStage {
     private long width;
     private long height;
     @Nonnull public static ArrayList<AbstractEnemy> _enemies = new ArrayList<AbstractEnemy>();
-    @Nonnull public static ArrayList<AbstractEntity> _entities = new ArrayList<AbstractEntity>();
+    @Nonnull public static ArrayList<Mountain> _grass = new ArrayList<Mountain>();
+    @Nonnull public static ArrayList<Road> _road = new ArrayList<Road>();
+    @Nonnull public static ArrayList<AbstractTower> storeTower = new ArrayList<AbstractTower>();
     public static String[][] Map = new String[Config.TILE_VERTICAL][Config.TILE_HORIZONTAL];
     public static ArrayList<Point> path = new ArrayList<Point>();
     private Spawner spawner;
@@ -64,6 +70,11 @@ public class GameStage {
                     String[] _row = scanner.nextLine().split("\\s");
                     for (int j = 0; j < Config.TILE_HORIZONTAL; j++) {
                         Map[i][j] = _row[j];
+                        int tile = Integer.parseInt((_row[j]));
+                        if (tile >=5 && tile <=9 || tile >=23 && tile <=27 || tile >=41 && tile <= 43 || tile >=47 && tile <=228 )
+                            _road.add(new Road(j * Config.TILE_SIZE, i * Config.TILE_SIZE));
+                        else if (tile <= 4 || tile >=18 && tile <= 22 || tile >= 36 && tile <= 40 )
+                            _grass.add(new Mountain(j * Config.TILE_SIZE, i * Config.TILE_SIZE));
                     }
                 }
 
@@ -85,7 +96,7 @@ public class GameStage {
                 for (int i = 0; i < numOfLine; i++) {
                     final String value = scanner.next();
                     if ("Spawner".equals(value)) {
-                        _entities.add(new Spawner(x, y));
+                        _road.add(new Spawner(x, y));
                     } else if ("NormalEnemy".equals(value)) {
                         final String direction = scanner.next();
                         int numOfSpawn = scanner.nextInt();
@@ -105,11 +116,19 @@ public class GameStage {
                     } else if ("Target".equals(value)) {
                         final int xTarget = scanner.nextInt();
                         final int yTarget = scanner.nextInt();
-                        _entities.add(new Target(xTarget, yTarget));
+                        _road.add(new Target(xTarget, yTarget));
                     } else if ("NormalTower".equals(value)) {
                         final int a = scanner.nextInt();
                         final int b = scanner.nextInt();
-                        _entities.add(new NormalTower(a, b));
+                        storeTower.add(new NormalTower(a, b));
+                    }  else if ("MachineGunTower".equals(value)) {
+                        final int a = scanner.nextInt();
+                        final int b = scanner.nextInt();
+                        storeTower.add(new MachineGunTower(a, b));
+                    }  else if ("SniperTower".equals(value)) {
+                        final int a = scanner.nextInt();
+                        final int b = scanner.nextInt();
+                        storeTower.add(new SniperTower(a, b));
                     } else {
                         System.out.println("Unexpected value! Input value: " + value);
                         scanner.nextLine();

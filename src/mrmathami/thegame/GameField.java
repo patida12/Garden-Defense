@@ -17,7 +17,10 @@ public final class GameField {
     public GameField( @Nonnull GameStage gameStage) {
         this.width = gameStage.getWidth();
         this.height = gameStage.getHeight();
-        entities.addAll(gameStage._entities);
+        entities.addAll(gameStage._grass);
+        entities.addAll(gameStage._road);
+        entities.addAll(gameStage.storeTower);
+        //entities.addAll(BuyTower.storeTower);
     }
 
     public void update(){

@@ -28,11 +28,13 @@
 96 384
 896 384
 896 480
-7
+9
 896 0
 Spawner
 Target 864 480
-NormalTower 32 32
+NormalTower 32 48
+MachineGunTower 32 112
+SniperTower 32 176
 SmallerEnemy DOWN 4
 NormalEnemy DOWN 3
 TankerEnemy DOWN 2

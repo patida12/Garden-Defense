@@ -5,11 +5,13 @@ import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import mrmathami.thegame.drawer.GameDrawer;
 import mrmathami.thegame.entity.enemy.AbstractEnemy;
-import mrmathami.thegame.entity.tile.tower.NormalTower;
+import mrmathami.thegame.entity.tile.tower.BuyTower;
 
 import java.util.ArrayList;
 
@@ -18,28 +20,34 @@ import java.util.ArrayList;
  */
 public final class GameController {
 
-    private final GraphicsContext graphicsContext;
-    private GameStage game = new GameStage();
-    Scene gameScene;
-    private GameField field = new GameField(game);
-    private Group enemyLayer;
+    private Canvas canvas;
+    private Group root;
+    public  static   GraphicsContext graphicsContext;
+    public  static  MouseEvent mouseEvent;
+    private Scene gameScene;
     private  AnimationTimer gameLoop;
+
+    private GameStage game = new GameStage();
+    private GameField field = new GameField(game);
     private GameDrawer drawer;
+    private BuyTower buyTower = new BuyTower();
     static int[] typeTower = {0};
     public static boolean isMenuGame = false;
     public static boolean isReady = false;
     public static boolean isPlay = false;
 
-    
 
-    public GameController(GraphicsContext graphicsContext, Scene scene) {
-        // The screen to draw on
-        this.graphicsContext = graphicsContext;
-        this.gameScene = scene;
+    public GameController(Stage primaryStage, Canvas _canvas, Group root) {
+        this.canvas = _canvas;
+        this.root = root;
+        root.getChildren().add(canvas);
+
+        // Tao scene
+        this.gameScene = new Scene(root);
+        this.graphicsContext = canvas.getGraphicsContext2D();
+
         game = GameStage.load("res/stage/demo.txt");
-        ////////////////////
 
-        ////////////////////
         field = new GameField(game);
 
         // Just a few acronyms.
@@ -47,6 +55,13 @@ public final class GameController {
         final long height = Config.TILE_VERTICAL;
 
         startGameLoop();
+        canvas.setOnMouseClicked(this::handleEvent);
+        //canvas.setOnMouseDragged(this::handleEvent);
+
+        primaryStage.setScene(gameScene);
+        primaryStage.setTitle("Garden Defense");
+        primaryStage.setResizable(false);
+        primaryStage.show();
 
     }
 
@@ -76,10 +91,10 @@ public final class GameController {
 
     }
 
-    public void handleEvent(){
-
-        gameScene.setOnMouseClicked(this::buyTower);
-
+    public void handleEvent(MouseEvent mouseEvent){
+        buyTower.chooseTower(mouseEvent);
+        buyTower.holdTower(mouseEvent, graphicsContext);
+        isReady(mouseEvent);
     }
 
     public void menuGame(){
@@ -101,7 +116,7 @@ public final class GameController {
         final LongProperty fpstimer = new SimpleLongProperty(0);
         ArrayList<AbstractEnemy> enemies = game._enemies;
 
-        handleEvent();
+        //handleEvent();
 
         final AnimationTimer timer = new AnimationTimer() {
             int timer = Config.WAITING_TIME;
@@ -112,7 +127,7 @@ public final class GameController {
                 drawer.render();
                 if (isReady) {
                     if (timestamp/ 1000000000 != secondUpdate.get()) {
-                        timer--;
+                        timer --;
                         if(timer >= Config.ENEMY_DURATION_SPAWN && index < enemies.size()) {
                             GameField.addEntity(enemies.get(index++));
                         }
@@ -130,15 +145,9 @@ public final class GameController {
         timer.start();
     }
 
-    public void buyTower(MouseEvent mouseEvent){
-        /*Them tower*/
+    public void isReady(MouseEvent mouseEvent){
         double posX = mouseEvent.getX();
         double posY = mouseEvent.getY();
         if (posX > 28*32 && posY > 18*32) isReady = true;
-        else if (posX < 32 * 3 && posY < 32 * 2) typeTower[0] = 1;
-        else if (posX > 100 && posY > 100 && typeTower[0] == 1) {
-            field.addEntity(new NormalTower(posX, posY));
-            typeTower[0] = 0;
-        }
     }
 }

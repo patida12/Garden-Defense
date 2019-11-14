@@ -1,9 +1,10 @@
 package mrmathami.thegame.entity.tile;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import mrmathami.thegame.drawer.LoadImage;
 
-public final class Target extends AbstractTile{
+public final class Target extends Road{
     private int health;
 
     public Target(double posX, double posY) {
@@ -14,6 +15,11 @@ public final class Target extends AbstractTile{
     @Override
     public void draw(GraphicsContext graphicsContext) {
         graphicsContext.drawImage(LoadImage.target, getX(), getY());
+    }
+
+    @Override
+    public void drawRectangle(GraphicsContext graphicsContext, Color color) {
+        super.drawRectangle(graphicsContext, color);
     }
 
     public long getHealth() {

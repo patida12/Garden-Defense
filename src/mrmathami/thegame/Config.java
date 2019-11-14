@@ -90,27 +90,30 @@ public final class Config {
 	//endregion
 
 	//region Tower
+	public static final int NORMAL_TOWER_TYPE = 0;
 	public static final long NORMAL_TOWER_SPEED = 30 * GAME_SPEED;
-	public static final double NORMAL_TOWER_RANGE = 5.0;
+	public static final double NORMAL_TOWER_RANGE = 70;
 	public static final int NORMAL_TOWER_UPGRADE_TIME = 5000 * GAME_SPEED;
 	public static final int NORMAL_TOWER_UPGRADE_COST = 2;
 	public static final int NORMAL_TOWER_SELL_COST = 1;
 
+	public static final int MACHINE_TOWER_TYPE = 1;
 	public static final long MACHINE_GUN_TOWER_SPEED = 5 * GAME_SPEED;
-	public static final double MACHINE_GUN_TOWER_RANGE = 4.0;
+	public static final double MACHINE_GUN_TOWER_RANGE = 100;
 	public static final int MACHINE_TOWER_UPGRADE_TIME = 7000 * GAME_SPEED;
 	public static final int MACHINE_TOWER_UPGRADE_COST = 5;
 	public static final int MACHINE_TOWER_SELL_COST = 3;
 
+	public static final int SNIPER_TOWER_TYPE = 2;
 	public static final long SNIPER_TOWER_SPEED = 60 * GAME_SPEED;
-	public static final double SNIPER_TOWER_RANGE = 8.0;
+	public static final double SNIPER_TOWER_RANGE = 150;
 	public static final int SNIPER_TOWER_UPGRADE_TIME = 10000 * GAME_SPEED;
 	public static final int SNIPER_TOWER_UPGRADE_COST = 10;
 	public static final int SNIPER_TOWER_SELL_COST = 6;
 	//endregion
 
 	//region Enemy
-	public static final int ENEMY_DURATION_SPAWN = 10 * GAME_SPEED;
+	public static final int ENEMY_DURATION_SPAWN = 10 / GAME_SPEED;
 
 	public static final double NORMAL_ENEMY_SIZE = 0.9;
 	public static final long NORMAL_ENEMY_HEALTH = 100;

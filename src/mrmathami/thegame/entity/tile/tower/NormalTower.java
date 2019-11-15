@@ -56,13 +56,13 @@ public final class NormalTower extends AbstractTower {
 
 
         if (normalBullet != null && normalBullet.isDestroy()){
-            System.out.println("xoa bullet");
+            if(target != null) {
+                target.takeDamage((int)attackDamage);
+            }
             GameField.removeEntity(this.normalBullet);
             normalBullet = null;
         }
         if ((target != null) && (normalBullet == null)){
-            System.out.println("!!!!!!!!!!!!!!!!!!!!");
-            System.out.println(getCenterX()+ " " + getCenterY());
             String direction= target.getDirectionStr();
             switch (direction) {
                 case "UP":

@@ -2,6 +2,7 @@ package mrmathami.thegame.entity.enemy;
 
 import javafx.scene.canvas.GraphicsContext;
 import mrmathami.thegame.Config;
+import mrmathami.thegame.GameField;
 import mrmathami.thegame.drawer.enemyDrawer.BossEnemyDrawer;
 import mrmathami.thegame.entity.Path;
 import mrmathami.thegame.entity.Point;
@@ -24,8 +25,6 @@ public class BossEnemy extends AbstractEnemy {
             return Path.path[++nodeDirection];
         return null;
     }
-
-
 
     public void calculateDirection() {
         Point currentWP = Path.path[nodeDirection];
@@ -74,7 +73,9 @@ public class BossEnemy extends AbstractEnemy {
                     break;
             }
         }
+        if (this.isPathFinished()) GameField.health -= Config.BOSS_ENEMY_REWARD;
         if (this.isDead() || this.isPathFinished()) {
+            GameField.score += this.reward;
             onDestroy();
         }
     }
@@ -89,7 +90,8 @@ public class BossEnemy extends AbstractEnemy {
 
     @Override
     public void draw(GraphicsContext graphicsContext) {
-        drawer.draw(graphicsContext, getX(), getY(), 32, 32);
+        drawer.draw(graphicsContext, getX(), getY(), 32, 32, this.health);
+
         Path.drawPath(graphicsContext);
     }
 }

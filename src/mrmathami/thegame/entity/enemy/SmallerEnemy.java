@@ -2,6 +2,7 @@ package mrmathami.thegame.entity.enemy;
 
 import javafx.scene.canvas.GraphicsContext;
 import mrmathami.thegame.Config;
+import mrmathami.thegame.GameField;
 import mrmathami.thegame.drawer.enemyDrawer.SmallerEnemyDrawer;
 import mrmathami.thegame.entity.Path;
 import mrmathami.thegame.entity.Point;
@@ -71,7 +72,9 @@ public class SmallerEnemy extends AbstractEnemy {
                 setX(getX() + Config.SMALLER_ENEMY_SPEED);
                 break;
         }
+        if (this.isPathFinished()) GameField.health -= Config.SMALLER_ENEMY_REWARD;
         if (this.isDead() || this.isPathFinished()) {
+            GameField.score += this.reward;
             onDestroy();
         }
     }
@@ -88,7 +91,8 @@ public class SmallerEnemy extends AbstractEnemy {
 
     @Override
     public void draw(GraphicsContext graphicsContext) {
-        drawer.draw(graphicsContext, getX(), getY(), 32, 32);
+        drawer.draw(graphicsContext, getX(), getY(), 32, 32, this.health);
+        System.out.println(this.health);
         Path.drawPath(graphicsContext);
     }
 }

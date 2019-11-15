@@ -27,6 +27,9 @@ public abstract class AbstractEntity implements GameEntity {
         this.rectangle.setHeight(height);
     }
 
+    protected AbstractEntity() {
+    }
+
 //    public void createEntity() {
 //        GameField.addEntity(this);
 //    };

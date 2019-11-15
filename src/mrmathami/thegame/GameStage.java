@@ -5,11 +5,7 @@ import mrmathami.thegame.entity.enemy.*;
 import mrmathami.thegame.entity.tile.Mountain;
 import mrmathami.thegame.entity.tile.Road;
 import mrmathami.thegame.entity.tile.Spawner;
-import mrmathami.thegame.entity.tile.Target;
-import mrmathami.thegame.entity.tile.tower.AbstractTower;
-import mrmathami.thegame.entity.tile.tower.MachineGunTower;
-import mrmathami.thegame.entity.tile.tower.NormalTower;
-import mrmathami.thegame.entity.tile.tower.SniperTower;
+import mrmathami.thegame.entity.tile.Garden;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -17,32 +13,26 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
+import java.util.*;
 
 public class GameStage {
     private static GameStage playerGame;
     private int stage;
-    private int wave;
-    private int score;
-    private int health;
     private long width;
     private long height;
     @Nonnull public static ArrayList<AbstractEnemy> _enemies = new ArrayList<AbstractEnemy>();
     @Nonnull public static ArrayList<Mountain> _grass = new ArrayList<Mountain>();
     @Nonnull public static ArrayList<Road> _road = new ArrayList<Road>();
-    @Nonnull public static ArrayList<AbstractTower> storeTower = new ArrayList<AbstractTower>();
+
     public static String[][] Map = new String[Config.TILE_VERTICAL][Config.TILE_HORIZONTAL];
     public static ArrayList<Point> path = new ArrayList<Point>();
+    public static Map<Map<Integer, Integer>, Boolean> hashMap = new HashMap<>();
+
     private Spawner spawner;
     private Target target;
 
     public GameStage() {
         this.stage = Config.IS_RUNNING;
-        this.wave = 0;
-        this.score = 0;
-        this.health = 0;
         this.width = Config.SCREEN_WIDTH;
         this.height = Config.SCREEN_HEIGHT;
     }
@@ -71,10 +61,17 @@ public class GameStage {
                     for (int j = 0; j < Config.TILE_HORIZONTAL; j++) {
                         Map[i][j] = _row[j];
                         int tile = Integer.parseInt((_row[j]));
+                        HashMap<Integer, Integer> temHashMap = new HashMap<>();
+                        temHashMap.put(j, i);
                         if (tile >=5 && tile <=9 || tile >=23 && tile <=27 || tile >=41 && tile <= 43 || tile >=47 && tile <=228 )
-                            _road.add(new Road(j * Config.TILE_SIZE, i * Config.TILE_SIZE));
+                            {
+                                _road.add(new Road(j * Config.TILE_SIZE, i * Config.TILE_SIZE));
+                                hashMap.put(temHashMap, true);
+                            }
                         else if (tile <= 4 || tile >=18 && tile <= 22 || tile >= 36 && tile <= 40 )
-                            _grass.add(new Mountain(j * Config.TILE_SIZE, i * Config.TILE_SIZE));
+                            {
+                                _grass.add(new Mountain(j * Config.TILE_SIZE, i * Config.TILE_SIZE));
+                            }
                     }
                 }
 
@@ -116,20 +113,8 @@ public class GameStage {
                     } else if ("Target".equals(value)) {
                         final int xTarget = scanner.nextInt();
                         final int yTarget = scanner.nextInt();
-                        _road.add(new Target(xTarget, yTarget));
-                    } else if ("NormalTower".equals(value)) {
-                        final int a = scanner.nextInt();
-                        final int b = scanner.nextInt();
-                        storeTower.add(new NormalTower(a, b));
-                    }  else if ("MachineGunTower".equals(value)) {
-                        final int a = scanner.nextInt();
-                        final int b = scanner.nextInt();
-                        storeTower.add(new MachineGunTower(a, b));
-                    }  else if ("SniperTower".equals(value)) {
-                        final int a = scanner.nextInt();
-                        final int b = scanner.nextInt();
-                        storeTower.add(new SniperTower(a, b));
-                    } else {
+                        _road.add(new Garden(xTarget, yTarget));
+                    }else {
                         System.out.println("Unexpected value! Input value: " + value);
                         scanner.nextLine();
     //						throw new InputMismatchException("Unexpected value! Input value: " + value);

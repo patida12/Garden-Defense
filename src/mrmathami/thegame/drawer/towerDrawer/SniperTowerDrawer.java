@@ -12,4 +12,9 @@ public class SniperTowerDrawer implements EntityDrawer {
         graphicsContext.drawImage(LoadImage.sniperTower, screenPosX, screenPosY, 20, 50);
 
     }
+
+    public void draw(@Nonnull GraphicsContext graphicsContext, double screenPosX, double screenPosY) {
+        graphicsContext.drawImage(LoadImage.sniperTower, screenPosX, screenPosY, 20, 50);
+
+    }
 }

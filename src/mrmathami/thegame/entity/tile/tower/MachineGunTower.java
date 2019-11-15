@@ -71,12 +71,13 @@ public final class MachineGunTower extends AbstractTower {
 
 
         if (machineGunBullet != null && machineGunBullet.isDestroy()){
+            if(target != null) {
+                target.takeDamage((int)attackDamage);
+            }
             GameField.removeEntity(machineGunBullet);
             machineGunBullet = null;
         }
         if ((target != null) && (machineGunBullet == null)){
-            System.out.println("!!!!!!!!!!!!!!!!!!!!");
-            System.out.println(getCenterX()+ " " + getCenterY());
             String direction= target.getDirectionStr();
             switch (direction){
                 case "UP":
@@ -94,10 +95,7 @@ public final class MachineGunTower extends AbstractTower {
                 default:
                     break;
             }
-
-
             GameField.addEntity(machineGunBullet);
-
         }
     }
 }

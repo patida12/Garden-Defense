@@ -4,10 +4,10 @@ import javafx.scene.canvas.GraphicsContext;
 import mrmathami.thegame.entity.AbstractEntity;
 
 public abstract class AbstractEnemy extends AbstractEntity {
-     long numOfSpawn;
-     long health;
+     protected long numOfSpawn;
+     protected long health;
      long armor;
-     double speed;
+     protected double speed;
      long reward;
      int nodeDirection = 0;
      boolean moveX;
@@ -25,6 +25,10 @@ public abstract class AbstractEnemy extends AbstractEntity {
         this.speed = speed;
         this.reward = reward;
         this.pathFinished = false;
+    }
+
+    public AbstractEnemy(double posX, double posY) {
+        super(posX, posY);
     }
 
     public void takeDamage(int damge) {

@@ -14,7 +14,6 @@ public class NormalBulletDrawer implements EntityDrawer {
         graphicsContext.setFill(Color.DARKBLUE);
         graphicsContext.fillOval(screenPosX, screenPosY, 10, 10);
 
-
     }
 }
 

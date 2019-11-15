@@ -80,7 +80,9 @@ public class NormalEnemy extends AbstractEnemy {
                     break;
             }
         }
+        if (this.isPathFinished()) GameField.health -= Config.NORMAL_ENEMY_REWARD;
         if (this.isDead() || this.isPathFinished()) {
+            GameField.score += this.reward;
             onDestroy();
         }
     }
@@ -95,7 +97,8 @@ public class NormalEnemy extends AbstractEnemy {
 
     @Override
     public void draw(GraphicsContext graphicsContext) {
-        drawer.draw(graphicsContext, getX(), getY(), 32, 32);
+        drawer.draw(graphicsContext, getX(), getY(), 32, 32, this.health);
+
         Path.drawPath(graphicsContext);
     }
 }

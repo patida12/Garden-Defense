@@ -3,12 +3,14 @@ package mrmathami.thegame.drawer.mapDrawer;
 import javafx.scene.canvas.GraphicsContext;
 import mrmathami.thegame.GameStage;
 import mrmathami.thegame.drawer.LoadImage;
+import mrmathami.thegame.drawer.towerDrawer.StoreDrawer;
 
 import java.io.IOException;
 
 public class MapDrawer {
 
     public static final String[][] MAP_SPRITES = GameStage.Map;
+    public static StoreDrawer storeDrawer = new StoreDrawer();
 
     public MapDrawer() throws IOException {
     }
@@ -24,6 +26,7 @@ public class MapDrawer {
             }
             //System.out.println();
         }
+        storeDrawer.draw(gc);
     }
 
     public static void render(GraphicsContext graphicsContext) {

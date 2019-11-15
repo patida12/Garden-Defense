@@ -1,15 +1,14 @@
 package mrmathami.thegame.entity.tile;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 import mrmathami.thegame.drawer.LoadImage;
 
-public final class Target extends Road{
+public final class Garden extends Road {
     private int health;
 
-    public Target(double posX, double posY) {
+    public Garden(double posX, double posY) {
         super(posX, posY);
-        this.health = 10;
+        this.health = 100;
     }
 
     @Override
@@ -17,10 +16,6 @@ public final class Target extends Road{
         graphicsContext.drawImage(LoadImage.target, getX(), getY());
     }
 
-    @Override
-    public void drawRectangle(GraphicsContext graphicsContext, Color color) {
-        super.drawRectangle(graphicsContext, color);
-    }
 
     public long getHealth() {
         return health;

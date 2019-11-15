@@ -5,11 +5,13 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import mrmathami.thegame.Config;
 import mrmathami.thegame.GameField;
+import mrmathami.thegame.GameStage;
 import mrmathami.thegame.drawer.LoadImage;
 import mrmathami.thegame.drawer.towerDrawer.ChoosingTowerDrawer;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class BuyTower extends AbstractTower {
@@ -17,7 +19,8 @@ public class BuyTower extends AbstractTower {
     @Nonnull
     public static ArrayList<AbstractTower> storeTower = new ArrayList<AbstractTower>();
     ChoosingTowerDrawer drawer = new ChoosingTowerDrawer();
-    private boolean isBought = false;
+
+    private boolean buyable = false;
     private boolean isHolding = false;
     private int type;
     private double range;
@@ -35,7 +38,7 @@ public class BuyTower extends AbstractTower {
         this.rectangle.setHeight(Config.TILE_SIZE);
         this.type = type;
         this.isHolding = false;
-        this.isBought = false;
+        this.buyable = false;
         if (type == 0) {
             this.rangeCircle.setRadius(Config.NORMAL_TOWER_RANGE);
             this.image = LoadImage.normalTower;
@@ -74,17 +77,24 @@ public class BuyTower extends AbstractTower {
                 isHolding = !isHolding;
             }
         } else if (isHolding && x >= 3 *32 && y <= 18 * 32) {
-            if (this.type == 0) {
-                GameField.addEntity(new NormalTower(x, y));
-                isHolding = false;
+            HashMap<Integer, Integer> temHashMap = new HashMap<>();
+            temHashMap.put((int) x/32, (int) y/32);
+            if (GameStage.hashMap.get(temHashMap) == null){
+                buyable = true;
+                if (this.type == 0) {
+                    GameField.addEntity(new NormalTower(x, y));
+                    isHolding = false;
+                }
+                else if (this.type == 1) {
+                    GameField.addEntity(new MachineGunTower(x, y));
+                    isHolding = false;
+                } else if (this.type == 2) {
+                    GameField.addEntity(new SniperTower(x, y));
+                    isHolding = false;
+                }
+                GameStage.hashMap.put(temHashMap, true);
             }
-            else if (this.type == 1) {
-                GameField.addEntity(new MachineGunTower(x, y));
-                isHolding = false;
-            } else if (this.type == 2) {
-                GameField.addEntity(new SniperTower(x, y));
-                isHolding = false;
-            }
+            else buyable = false;
         }
     }
 
@@ -98,7 +108,7 @@ public class BuyTower extends AbstractTower {
         if (isHolding) {
             graphicsContext.setGlobalAlpha(0.3);
             graphicsContext.drawImage(image, this.getX(), this.getY());
-            drawer.draw(graphicsContext, this.getX(), this.getY(), this.range, this.range);
+            drawer.draw(graphicsContext, this.getX(), this.getY(), this.range, this.range, buyable);
             System.out.println("isHolding");
         }else {
             graphicsContext.setGlobalAlpha(1);

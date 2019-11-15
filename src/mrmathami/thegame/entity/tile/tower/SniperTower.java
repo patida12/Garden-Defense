@@ -55,12 +55,13 @@ public final class SniperTower extends AbstractTower {
 
 
         if (sniperBullet != null && sniperBullet.isDestroy()){
+            if(target != null) {
+                target.takeDamage((int)attackDamage);
+            }
             GameField.removeEntity(sniperBullet);
             sniperBullet = null;
         }
         if ((target != null) && (sniperBullet == null)){
-            System.out.println("!!!!!!!!!!!!!!!!!!!!");
-            System.out.println(getCenterX()+ " " + getCenterY());
             String direction= target.getDirectionStr();
             switch (direction) {
                 case "UP":

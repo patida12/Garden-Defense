@@ -11,4 +11,8 @@ public class MachineGunTowerDrawer implements EntityDrawer {
     public void draw(@Nonnull GraphicsContext graphicsContext, double screenPosX, double screenPosY, double screenWidth, double screenHeight) {
         graphicsContext.drawImage(LoadImage.machineGunTower, screenPosX, screenPosY);
     }
+
+    public void draw(@Nonnull GraphicsContext graphicsContext, double screenPosX, double screenPosY) {
+        graphicsContext.drawImage(LoadImage.machineGunTower, screenPosX, screenPosY);
+    }
 }

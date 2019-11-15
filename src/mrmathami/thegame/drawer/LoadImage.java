@@ -17,6 +17,7 @@ public class LoadImage {
     public static Image target = new Image("file:src/assets/images/target.png");
     public static Image spawner = new Image("file:src/assets/images/spawner.png");
     public static Image startMenu = new Image("file:src/assets/images/startMenu.png");
+    public static Image display = new Image("file:src/assets/images/display.png");
 
 
     public static void Map() {

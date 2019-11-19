@@ -14,14 +14,17 @@ public class FieldDrawer implements EntityDrawer {
     }
 
     public void draw(@Nonnull GraphicsContext graphicsContext) {
-        graphicsContext.setFont(new Font("assets/text/zorque.ttf", 20));
+        graphicsContext.setFont(Font.loadFont("file:src/assets/text/Diavlo_BOLD_II_37.otf", 20));
         graphicsContext.drawImage(LoadImage.display, 7 * 32, 17 * 32);
-        if (GameController.isReady) graphicsContext.setStroke(Color.RED);
-        else graphicsContext.setStroke(Color.BLACK);
-        graphicsContext.strokeText("Ready", 29 * 32 - 16, 19 * 32, 3 * 32);
-        graphicsContext.setFill(Color.BLACK);
+        if (GameController.isReady) graphicsContext.setFill(Color.RED);
+        else graphicsContext.setFill(Color.BLACK);
+        graphicsContext.fillText("Ready", 29 * 32 - 32, 19 * 32, 3 * 32);
+
+        graphicsContext.setFill(Color.DARKGOLDENROD);
         graphicsContext.fillText("Cash: " + String.valueOf(GameField.score) + " $", 3 * 32, 18 * 32 - 6);
+        graphicsContext.setFill(Color.GREEN);
         graphicsContext.fillText("Live: " + String.valueOf(GameField.countEnemies()) , 3 * 32, 19 * 32 - 6);
+        graphicsContext.setFill(Color.RED);
         graphicsContext.fillText("Health: " + String.valueOf(GameField.health) , 3 * 32, 20 * 32 - 6);
     }
 }

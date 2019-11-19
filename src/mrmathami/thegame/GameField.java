@@ -27,12 +27,14 @@ public final class GameField {
     }
 
     public void update(){
-        for (int i = entities.size() - 1; i >= 0; i--) {
+        if (GameController.game.isRunning()){
+            for (int i = entities.size() - 1; i >= 0; i--) {
             if( entities.get(i) == null) {
                 continue;
             }
             else
                 entities.get(i).update();
+            }
         }
 
     }

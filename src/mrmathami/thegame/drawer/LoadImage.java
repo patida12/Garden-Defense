@@ -16,8 +16,13 @@ public class LoadImage {
     public static Image normalBullet = new Image("file:src/assets/images/tankerEnemy.png");
     public static Image target = new Image("file:src/assets/images/target.png");
     public static Image spawner = new Image("file:src/assets/images/spawner.png");
-    public static Image startMenu = new Image("file:src/assets/images/startMenu.png");
+    public static Image startMenu = new Image("file:src/assets/images/startMenu.jpg");
     public static Image display = new Image("file:src/assets/images/display.png");
+    public static Image play = new Image("file:src/assets/images/start_bt.png");
+    public static Image start = new Image("file:src/assets/images/start_bt.png"                                                                          );
+    public static Image menu = new Image("file:src/assets/images/menu/Layer-2.png");
+    public static Image quit = new Image("file:src/assets/images/botan_quit.png");
+    public static Image restart = new Image("file:src/assets/images/botan_restart.png");
 
 
     public static void Map() {

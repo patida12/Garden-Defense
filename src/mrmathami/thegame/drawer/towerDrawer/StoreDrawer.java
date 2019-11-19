@@ -15,8 +15,8 @@ public class StoreDrawer implements EntityDrawer {
     }
 
     public void draw(@Nonnull GraphicsContext graphicsContext){
-        normalTowerDrawer.draw(graphicsContext, 32, 48);
-        machineGunTowerDrawer.draw(graphicsContext, 32, 112);
-        sniperTowerDrawer.draw(graphicsContext, 32, 176, 20, 50);
+        normalTowerDrawer.draw(graphicsContext, 64, 48);
+        machineGunTowerDrawer.draw(graphicsContext, 64, 112);
+        sniperTowerDrawer.draw(graphicsContext, 64, 176, 20, 50);
     }
 }

@@ -10,7 +10,7 @@ public class SniperBulletDrawer implements EntityDrawer {
     @Override
     public void draw(@Nonnull GraphicsContext graphicsContext, double screenPosX, double screenPosY, double screenWidth, double screenHeight) {
         //graphicsContext.drawImage(LoadImage.sniperBullet, screenPosX, screenPosY);
-        graphicsContext.setFill(Color.BLUE);
+        graphicsContext.setFill(Color.ORANGERED);
         graphicsContext.fillOval(screenPosX, screenPosY, 10, 10);
     }
 }

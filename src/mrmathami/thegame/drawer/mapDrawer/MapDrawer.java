@@ -1,6 +1,7 @@
 package mrmathami.thegame.drawer.mapDrawer;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import mrmathami.thegame.GameStage;
 import mrmathami.thegame.drawer.LoadImage;
 import mrmathami.thegame.drawer.towerDrawer.StoreDrawer;
@@ -27,6 +28,8 @@ public class MapDrawer {
             //System.out.println();
         }
         storeDrawer.draw(gc);
+        gc.setFill(Color.BLUEVIOLET);
+        gc.fillText("MENU", 20,20);
     }
 
     public static void render(GraphicsContext graphicsContext) {

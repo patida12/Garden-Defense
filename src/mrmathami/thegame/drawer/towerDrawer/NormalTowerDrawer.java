@@ -9,10 +9,10 @@ import javax.annotation.Nonnull;
 public class NormalTowerDrawer implements EntityDrawer {
     @Override
     public void draw(@Nonnull GraphicsContext graphicsContext, double screenPosX, double screenPosY, double screenWidth, double screenHeight) {
-        graphicsContext.drawImage(LoadImage.normalTower, screenPosX, screenPosY);
+        graphicsContext.drawImage(LoadImage.normalTower, (int)(screenPosX/32) * 32, (int)(screenPosY/32) * 32 - 10);
     }
 
     public void draw(@Nonnull GraphicsContext graphicsContext, double screenPosX, double screenPosY) {
-        graphicsContext.drawImage(LoadImage.normalTower, screenPosX, screenPosY);
+        graphicsContext.drawImage(LoadImage.normalTower, (int)(screenPosX/32) * 32, (int)(screenPosY/32) * 32 - 10);
     }
 }

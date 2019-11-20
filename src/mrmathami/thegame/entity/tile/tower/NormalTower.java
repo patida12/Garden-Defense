@@ -7,10 +7,14 @@ import mrmathami.thegame.drawer.towerDrawer.NormalTowerDrawer;
 import mrmathami.thegame.entity.AbstractEntity;
 import mrmathami.thegame.entity.bullet.NormalBullet;
 import mrmathami.thegame.entity.enemy.AbstractEnemy;
+import mrmathami.thegame.entity.enemy.NormalEnemy;
+import mrmathami.thegame.entity.enemy.SmallerEnemy;
 
 public final class NormalTower extends AbstractTower {
     NormalTowerDrawer drawer = new NormalTowerDrawer();
     NormalBullet normalBullet = null;
+    AbstractEnemy enemyTarget;
+    int timeNewBullet = 0;
     public NormalTower(double x , double y){
         super(x, y, Config.NORMAL_BULLET_STRENGTH, Config.NORMAL_TOWER_SPEED, Config.NORMAL_TOWER_RANGE, Config.NORMAL_TOWER_UPGRADE_TIME, Config.NORMAL_TOWER_UPGRADE_COST, Config.NORMAL_TOWER_SELL_COST);
     }
@@ -56,26 +60,37 @@ public final class NormalTower extends AbstractTower {
 
 
         if (normalBullet != null && normalBullet.isDestroy()){
-            if(target != null) {
-                target.takeDamage((int)attackDamage);
+            if(enemyTarget != null && timeNewBullet == 30) {
+                enemyTarget.takeDamage((int)attackDamage);
             }
             GameField.removeEntity(this.normalBullet);
-            normalBullet = null;
+            if (timeNewBullet == 0){
+                normalBullet = null;
+                enemyTarget = null;
+            }
+            else
+                timeNewBullet--;
         }
         if ((target != null) && (normalBullet == null)){
+            timeNewBullet = 30;
             String direction= target.getDirectionStr();
+            enemyTarget = (AbstractEnemy)target;
+            double extra = 0;
+            if (target instanceof NormalEnemy) extra = Config.NORMAL_ENEMY_SPEED * 2;
+            if (target instanceof SmallerEnemy) extra = Config.SMALLER_ENEMY_SPEED * 3;
+
             switch (direction) {
                 case "UP":
-                    normalBullet = new NormalBullet(getCenterX(), getCenterY(), target.getCenterX(), target.getCenterY() - Config.NORMAL_BULLET_SPEED);
+                    normalBullet = new NormalBullet(getCenterX(), getCenterY(), target.getCenterX(), target.getCenterY() - extra);
                     break;
                 case "DOWN":
-                    normalBullet = new NormalBullet(getCenterX(), getCenterY(), target.getCenterX() , target.getCenterY() + Config.NORMAL_BULLET_SPEED);
+                    normalBullet = new NormalBullet(getCenterX(), getCenterY(), target.getCenterX() , target.getCenterY() + extra);
                     break;
                 case "LEFT":
-                    normalBullet = new NormalBullet(getCenterX(), getCenterY(), target.getCenterX() - Config.NORMAL_BULLET_SPEED, target.getCenterY());
+                    normalBullet = new NormalBullet(getCenterX(), getCenterY(), target.getCenterX() - extra, target.getCenterY());
                     break;
                 case "RIGHT":
-                    normalBullet = new NormalBullet(getCenterX(), getCenterY(), target.getCenterX() + Config.NORMAL_BULLET_SPEED, target.getCenterY());
+                    normalBullet = new NormalBullet(getCenterX(), getCenterY(), target.getCenterX() + extra, target.getCenterY());
                     break;
                 default:
                     break;

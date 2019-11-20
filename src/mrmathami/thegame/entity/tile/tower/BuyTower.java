@@ -55,21 +55,21 @@ public class BuyTower extends AbstractTower {
         double x = mouseEvent.getX();
         double y = mouseEvent.getY();
         if(x <= 3 * 32 && y <= 7 * 32 && y >= 0) {
-            if ( y >= 1 *32 && y <= 3 *32) {
+            if ( y >= 1 *32 && y <= 3 *32 && GameField.score >= Config.NORMAL_TOWER_SELL_COST) {
                 this.type = 0;
                 this.rangeCircle.setRadius(Config.NORMAL_TOWER_RANGE);
                 this.image = LoadImage.normalTower;
                 storeTower.add(new BuyTower(x, y, 0));
                 isHolding = !isHolding;
             }
-            else if ( y > 3 * 32 && y <= 5 * 32) {
+            else if ( y > 3 * 32 && y <= 5 * 32 && GameField.score >= Config.MACHINE_TOWER_SELL_COST) {
                 this.type = 1;
                 this.rangeCircle.setRadius(Config.MACHINE_GUN_TOWER_RANGE);
                 this.image = LoadImage.machineGunTower;
                 storeTower.add(new BuyTower(x, y, 1));
                 isHolding = !isHolding;
             }
-            else if ( y > 5 * 32 && y <= 7 * 32) {
+            else if ( y > 5 * 32 && y <= 7 * 32 && GameField.score >= Config.SNIPER_TOWER_SELL_COST) {
                 this.type = 2;
                 this.rangeCircle.setRadius(Config.SNIPER_TOWER_RANGE);
                 this.image = LoadImage.sniperTower;
@@ -82,13 +82,16 @@ public class BuyTower extends AbstractTower {
             if (GameStage.hashMap.get(temHashMap) == null){
                 buyable = true;
                 if (this.type == 0) {
+                    GameField.score -= Config.NORMAL_TOWER_SELL_COST;
                     GameField.addEntity(new NormalTower(x, y));
                     isHolding = false;
                 }
                 else if (this.type == 1) {
+                    GameField.score -= Config.MACHINE_TOWER_SELL_COST;
                     GameField.addEntity(new MachineGunTower(x, y));
                     isHolding = false;
                 } else if (this.type == 2) {
+                    GameField.score -= Config.SNIPER_TOWER_SELL_COST;
                     GameField.addEntity(new SniperTower(x, y));
                     isHolding = false;
                 }

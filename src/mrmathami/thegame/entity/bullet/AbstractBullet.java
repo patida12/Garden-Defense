@@ -16,6 +16,7 @@ public abstract class AbstractBullet extends AbstractEntity {
         setY(posY);
         target = new Target(deltaX, deltaY);
         this.speed = speed;
+        System.out.println(speed + "*");
         this.strength = (int)strength;
 
         len = Math.sqrt((posX - deltaX) * (posX - deltaX) + (posY - deltaY) * (posY - deltaY));
@@ -31,7 +32,7 @@ public abstract class AbstractBullet extends AbstractEntity {
     }
     @Override
     public void update() {
-        //System.out.println(alpha);
+
         if(target.getX() < this.getX()){
             if(target.getY() < this.getY()){
                 /*this.setX(this.getX() - len*Math.cos(alpha));

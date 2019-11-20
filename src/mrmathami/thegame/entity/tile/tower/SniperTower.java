@@ -11,6 +11,8 @@ import mrmathami.thegame.entity.enemy.AbstractEnemy;
 public final class SniperTower extends AbstractTower {
     SniperTowerDrawer drawer = new SniperTowerDrawer();
     SniperBullet sniperBullet = null;
+    AbstractEnemy enemyTarget;
+    int timeNewBullet = 0;
     public SniperTower(double x , double y){
         super(x, y, Config.SNIPER_BULLET_STRENGTH, Config.SNIPER_TOWER_SPEED, Config.SNIPER_TOWER_RANGE, Config.SNIPER_TOWER_UPGRADE_TIME, Config.SNIPER_TOWER_UPGRADE_COST, Config.SNIPER_TOWER_SELL_COST);
     }
@@ -55,26 +57,32 @@ public final class SniperTower extends AbstractTower {
 
 
         if (sniperBullet != null && sniperBullet.isDestroy()){
-            if(target != null) {
-                target.takeDamage((int)attackDamage);
+            if(enemyTarget != null && timeNewBullet == Config.SNIPER_TOWER_SPEED) {
+                enemyTarget.takeDamage((int)attackDamage);
             }
             GameField.removeEntity(sniperBullet);
-            sniperBullet = null;
+            if (timeNewBullet == 0){
+                sniperBullet = null;
+                enemyTarget = null;
+            }else
+                timeNewBullet--;
         }
         if ((target != null) && (sniperBullet == null)){
             String direction= target.getDirectionStr();
+            timeNewBullet = (int) Config.SNIPER_TOWER_SPEED;
+            enemyTarget = target;
             switch (direction) {
                 case "UP":
-                    sniperBullet = new SniperBullet(getCenterX(), getCenterY(), target.getCenterX(), target.getCenterY() - Config.SNIPER_BULLET_SPEED);
+                    sniperBullet = new SniperBullet(getCenterX(), getCenterY(), target.getCenterX(), target.getCenterY() );
                     break;
                 case "DOWN":
-                    sniperBullet = new SniperBullet(getCenterX(), getCenterY(), target.getCenterX(), target.getCenterY() + Config.SNIPER_BULLET_SPEED);
+                    sniperBullet = new SniperBullet(getCenterX(), getCenterY(), target.getCenterX(), target.getCenterY());
                     break;
                 case "LEFT":
-                    sniperBullet = new SniperBullet(getCenterX(), getCenterY(), target.getCenterX() - Config.SNIPER_BULLET_SPEED, target.getCenterY());
+                    sniperBullet = new SniperBullet(getCenterX(), getCenterY(), target.getCenterX() , target.getCenterY());
                     break;
                 case "RIGHT":
-                    sniperBullet = new SniperBullet(getCenterX(), getCenterY(), target.getCenterX() + Config.SNIPER_BULLET_SPEED, target.getCenterY());
+                    sniperBullet = new SniperBullet(getCenterX(), getCenterY(), target.getCenterX() , target.getCenterY());
                     break;
                 default:
                     break;

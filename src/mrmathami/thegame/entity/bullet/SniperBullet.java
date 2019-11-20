@@ -8,7 +8,7 @@ import mrmathami.thegame.entity.Path;
 public class SniperBullet extends AbstractBullet{
     SniperBulletDrawer drawer = new SniperBulletDrawer();
     public  SniperBullet(double startX, double startY, double endX, double endY){
-        super(startX, startY, endX, endY, Config.SNIPER_TOWER_SPEED,Config.MACHINE_GUN_BULLET_STRENGTH);
+        super(startX, startY, endX, endY, Config.SNIPER_BULLET_SPEED,Config.SNIPER_BULLET_STRENGTH);
     }
     public void draw(GraphicsContext graphicsContext){
 

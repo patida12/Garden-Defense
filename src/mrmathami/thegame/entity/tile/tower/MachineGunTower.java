@@ -11,7 +11,8 @@ import mrmathami.thegame.entity.enemy.AbstractEnemy;
 public final class MachineGunTower extends AbstractTower {
     MachineGunTowerDrawer drawer = new MachineGunTowerDrawer();
     MachineGunBullet machineGunBullet = null;
-
+    AbstractEnemy enemyTarget;
+    int timeNewBullet = 0;
     public MachineGunTower(double x , double y){
         super(x, y, Config.MACHINE_GUN_BULLET_STRENGTH, Config.MACHINE_GUN_TOWER_SPEED, Config.MACHINE_GUN_TOWER_RANGE, Config.MACHINE_TOWER_UPGRADE_TIME, Config.MACHINE_TOWER_UPGRADE_COST, Config.MACHINE_TOWER_SELL_COST);
     }
@@ -71,14 +72,20 @@ public final class MachineGunTower extends AbstractTower {
 
 
         if (machineGunBullet != null && machineGunBullet.isDestroy()){
-            if(target != null) {
-                target.takeDamage((int)attackDamage);
+            if(enemyTarget != null && timeNewBullet == Config.MACHINE_GUN_TOWER_SPEED) {
+                enemyTarget.takeDamage((int)attackDamage);
             }
             GameField.removeEntity(machineGunBullet);
-            machineGunBullet = null;
+            if (timeNewBullet == 0){
+                machineGunBullet = null;
+                enemyTarget = null;
+            }else
+                timeNewBullet--;
         }
         if ((target != null) && (machineGunBullet == null)){
             String direction= target.getDirectionStr();
+            timeNewBullet = (int) Config.MACHINE_GUN_TOWER_SPEED;
+            enemyTarget = target;
             switch (direction){
                 case "UP":
                     machineGunBullet = new MachineGunBullet(getCenterX(),getCenterY(),target.getCenterX(), target.getCenterY());

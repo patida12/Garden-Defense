@@ -11,7 +11,7 @@ public class MachineGunBullet extends AbstractBullet{
     public MachineGunBullet(){}
 
     public  MachineGunBullet(double startX, double startY, double endX, double endY){
-        super(startX, startY, endX, endY, Config.MACHINE_GUN_TOWER_SPEED,Config.MACHINE_GUN_BULLET_STRENGTH);
+        super(startX, startY, endX, endY, Config.MACHINE_GUN_BULLET_SPEED,Config.MACHINE_GUN_BULLET_STRENGTH);
     }
 
     public void draw(GraphicsContext graphicsContext){

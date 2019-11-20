@@ -16,7 +16,7 @@ public final class GameField {
     private final double height;
 
     public GameField( @Nonnull GameStage gameStage) {
-        this.score = 0;
+        this.score = 2;
         this.health = 100;
         this.live = 0;
         this.width = gameStage.getWidth();

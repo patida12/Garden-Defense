@@ -2,8 +2,6 @@ package mrmathami.thegame;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
-import javafx.beans.property.LongProperty;
-import javafx.beans.property.SimpleLongProperty;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -11,10 +9,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import mrmathami.thegame.drawer.GameDrawer;
-import mrmathami.thegame.entity.enemy.AbstractEnemy;
+import mrmathami.thegame.entity.enemy.Wave;
 import mrmathami.thegame.entity.tile.tower.BuyTower;
-
-import java.util.ArrayList;
 
 /**
  * A game controller. Everything about the game should be managed in here.
@@ -31,6 +27,8 @@ public final class GameController {
     public static GameStage game = new GameStage();
     private GameStage game1 = new GameStage();
     private GameStage game2 = new GameStage();
+    private GameStage game3 = new GameStage();
+    private Wave wave = new Wave();
     private GameField field ;
     private GameDrawer drawer;
     private BuyTower buyTower = new BuyTower();
@@ -51,18 +49,16 @@ public final class GameController {
         // Tao scene
         this.gameScene = new Scene(root);
         this.graphicsContext = canvas.getGraphicsContext2D();
-//
-        game = GameStage.load("res/stage/demo.txt");
 
-        field = new GameField(game);
+        GameStage _game = new GameStage();
+
+        initGameStage(_game);
 
         // Just a few acronyms.
         final long width = Config.TILE_HORIZONTAL;
         final long height = Config.TILE_VERTICAL;
 
         startGameLoop();
-
-
 
         primaryStage.setScene(gameScene);
         primaryStage.setTitle("Garden Defense");
@@ -71,15 +67,32 @@ public final class GameController {
 
     }
 
+    public void initGameStage(GameStage gameStage){
+        game = gameStage;
+        field = new GameField(gameStage);
+        wave = new Wave(5);
+    }
+    
+    public void initGame(){
+         isStartMenuGame = true;
+         isSelectMap = false;
+         isSelected = false;
+         isMenu = false;
+         isReady = false;
+         isPlay = false;
+    }
+
     public  Scene getGameScene(){
         return gameScene;
     }
 
     public void stopGame(){
-        isMenu = false;
-        pauseGame();
-        game.setStage(Config.IS_STOPPED);
         gameLoop.stop();
+        game.setStage(Config.IS_STOPPED);
+        isPlay = false;
+        isReady = false;
+        isMenu = false;
+        GameField.curWave = 0;
     }
 
     public void pauseGame(){
@@ -92,8 +105,7 @@ public final class GameController {
     }
 
     public void startGameLoop() {
-        this.drawer = new GameDrawer(graphicsContext, field);
-
+        drawer = new GameDrawer(graphicsContext, field);
         if (isStartMenuGame) {
             showStartMenuGame();
         }
@@ -102,34 +114,18 @@ public final class GameController {
 
     public void playGame() {
         isPlay = true;
-        /////////////////////////////////////////////////////////
-        final LongProperty secondUpdate = new SimpleLongProperty(0);
-        final LongProperty fpstimer = new SimpleLongProperty(0);
-        ArrayList<AbstractEnemy> enemies = game._enemies;
         canvas.setOnMousePressed(this::handleEvent);
 
 
          final AnimationTimer timer = new AnimationTimer() {
-            int time = Config.WAITING_TIME;
-            int index = 0;
 
             @Override
             public void handle(long timestamp) {
-                System.out.println("df");
                 drawer.render();
-                if (isReady) {
-                    if (timestamp/ 1000000000 != secondUpdate.get()) {
-                        time --;
-                        if(time >= Config.ENEMY_DURATION_SPAWN && index < enemies.size()) {
-                            GameField.addEntity(enemies.get(index++));
-                        }
-                        else if(time <= 0 && index < enemies.size()){
-                            GameField.addEntity(enemies.get(index));
-                            time = (int) (Config.ENEMY_DURATION_SPAWN + enemies.get(index++).getNumOfSpawn());
-                        }
-                    }
-                    fpstimer.set(timestamp / 10000000);
-                    secondUpdate.set(timestamp / 1000000000);
+                if (isReady && game.isRunning()) {
+                   // System.out.println("ready");
+                    wave.update();
+                    showGameOver();
                 }
             }
         };
@@ -169,30 +165,50 @@ public final class GameController {
         double posX = mouseEvent.getX();
         double posY = mouseEvent.getY();
 
-        if (posX > 28*32 && posY > 18*32) isReady = true;
+        if (posX > 28*32 && posY > 18*32){
+            isReady = true;
+            if (GameField.curWave > 0 ) {
+                GameField.curWave++;
+               // System.out.println(GameStage.waves.size());
+            }
+        }
     }
 
     public void selectMap(MouseEvent mouseEvent){
         double posX = mouseEvent.getX();
         double posY = mouseEvent.getY();
         if (!isSelected &&posX < 320) {
-            isSelectMap = false;
+            isSelected = false;
             System.out.println("1");
-            game = GameStage.load("res/stage/demo.txt");;
-            field = new GameField(game);
+            game1 = GameStage.load("res/stage/map1.txt");
+            game = game1;
+            initGameStage(game1);
+
             isSelected = true;
         }
         if (!isSelected && posX > 320 && posX < 640) {
-            isSelectMap = false;
+            isSelected = false;
             System.out.println("2");
-            game = GameStage.load("res/stage/demo1.txt");
-            field = new GameField(game);
+            game2 = GameStage.load("res/stage/map2.txt");
+            game = game2;
+            initGameStage(game2);
+
+            isSelected = true;
+        }
+        if (!isSelected && posX >= 640) {
+            isSelected = false;
+            System.out.println("3");
+            game3 = GameStage.load("res/stage/map3.txt");
+            game = game3;
+            initGameStage(game3);
+
             isSelected = true;
         }
     }
 
     public void showSelectMap(){
         isSelectMap = true;
+        isSelected = false;
         canvas.setOnMouseClicked(this::selectMap);
         drawer.render();
 
@@ -219,30 +235,51 @@ public final class GameController {
     }
 
     public void showMenu(){
-    //    canvas.setOnMouseClicked(this::checkIsMenu);
-
         if(isMenu){
-            game.setStage(Config.IS_PAUSED);
+            pauseGame();
             drawer.render();
             GameDrawer.resume_button.setOnMousePressed(mouseEvent1 -> {
                 GameDrawer.resume_button.setEffect(GameDrawer.shadow);
+                graphicsContext.setGlobalAlpha(1);
                 resumeGame();
             });
 
             GameDrawer.restart_button.setOnMousePressed(mouseEvent1 -> {
                 GameDrawer.restart_button.setEffect(GameDrawer.shadow);
-                isMenu = false;
-                game.setStage(Config.IS_STOPPED);
+                graphicsContext.setGlobalAlpha(1);
+                stopGame();
+
                 GameStage.getNewgame();
+                initGameStage(GameStage.load("res/stage/map1.txt"));
                 playGame();
             });
 
             GameDrawer.select_map_button.setOnMousePressed(mouseEvent1 -> {
                 GameDrawer.select_map_button.setEffect(GameDrawer.shadow);
+                graphicsContext.setGlobalAlpha(1);
                 stopGame();
                 showSelectMap();
             });
         }
     }
 
+    public void showGameOver() {
+        if (game.isGameOver()) {
+            GameDrawer.start_menu_button.setOnMousePressed(mouseEvent2 -> {
+                GameDrawer.start_menu_button.setEffect(GameDrawer.shadow);
+                //game = new GameStage();
+                GameDrawer.start_menu_button.setVisible(false);
+                stopGame();
+                initGameStage(GameStage.load("res/stage/map1.txt"));
+                initGame();
+                showStartMenuGame();
+            });
+
+            GameDrawer.quit_button.setOnMouseClicked(mouseEvent1 -> {
+                GameDrawer.quit_button.setEffect(GameDrawer.shadow);
+                isStartMenuGame = false;
+                Platform.exit();
+            });
+        }
+    }
 }

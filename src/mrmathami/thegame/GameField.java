@@ -8,26 +8,32 @@ import java.util.ArrayList;
 
 public final class GameField {
     @Nonnull public static  ArrayList<AbstractEntity> entities = new ArrayList<AbstractEntity>();
-    public static int score;
+    public static int cash;
     public static int  health;
     public static int live;
+    public static int curWave = 0;
     private final double width;
-
     private final double height;
 
     public GameField( @Nonnull GameStage gameStage) {
-        this.score = 0;
+        this.cash = 0;
         this.health = 100;
         this.live = 0;
+        this.curWave = 0;
         this.width = gameStage.getWidth();
         this.height = gameStage.getHeight();
+        try {
+            entities.clear();
+        } catch (Exception e){}
         entities.addAll(gameStage._grass);
         entities.addAll(gameStage._road);
-        //entities.addAll(BuyTower.storeTower);
+
     }
 
     public void update(){
+
         if (GameController.game.isRunning()){
+            if (health <= 0) health = 0;
             for (int i = entities.size() - 1; i >= 0; i--) {
             if( entities.get(i) == null) {
                 continue;

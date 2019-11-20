@@ -21,7 +21,7 @@ public class FieldDrawer implements EntityDrawer {
         graphicsContext.fillText("Ready", 29 * 32 - 32, 19 * 32, 3 * 32);
 
         graphicsContext.setFill(Color.DARKGOLDENROD);
-        graphicsContext.fillText("Cash: " + String.valueOf(GameField.score) + " $", 3 * 32, 18 * 32 - 6);
+        graphicsContext.fillText("Cash: " + String.valueOf(GameField.cash) + " $", 3 * 32, 18 * 32 - 6);
         graphicsContext.setFill(Color.GREEN);
         graphicsContext.fillText("Live: " + String.valueOf(GameField.countEnemies()) , 3 * 32, 19 * 32 - 6);
         graphicsContext.setFill(Color.RED);

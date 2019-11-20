@@ -23,6 +23,12 @@ public class LoadImage {
     public static Image menu = new Image("file:src/assets/images/menu/Layer-2.png");
     public static Image quit = new Image("file:src/assets/images/botan_quit.png");
     public static Image restart = new Image("file:src/assets/images/botan_restart.png");
+    public static Image gameOver = new Image("file:src/assets/images/gameOver.jpg");
+    public static Image star = new Image("file:src/assets/images/star.png");
+    public static Image map1 = new Image("file:src/assets/images/map1.png");
+    public static Image map2 = new Image("file:src/assets/images/map2.png");
+    public static Image map3 = new Image("file:src/assets/images/map3.png");
+
 
 
     public static void Map() {

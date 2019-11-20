@@ -12,7 +12,7 @@ public final class Spawner extends Road{
 
     @Override
     public void draw(GraphicsContext graphicsContext) {
-        graphicsContext.drawImage(LoadImage.spawner, getX(), getY());
+        graphicsContext.drawImage(LoadImage.spawner, getX() -16, getY() - 32, 32 * 2, 32 * 2);
     }
 
     @Override

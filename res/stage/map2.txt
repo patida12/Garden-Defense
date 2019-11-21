@@ -40,8 +40,8 @@
 736 32
 864 64
 5
-1 SmallerEnemy DOWN 10
-1 NormalEnemy DOWN 8
-1 TankerEnemy DOWN 5
-3 SmallerEnemy DOWN 1 NormalEnemy DOWN 1 TankerEnemy DOWN 1
+1 SmallerEnemy DOWN 15
+1 NormalEnemy DOWN 12
+1 TankerEnemy DOWN 10
+3 SmallerEnemy DOWN 12 NormalEnemy DOWN 10 TankerEnemy DOWN 8
 1 BossEnemy DOWN 1

@@ -14,14 +14,10 @@ public final class GameField {
     public static int curWave = 0;
     private final double width;
     private final double height;
-    private final int score;
+
 
     public GameField( @Nonnull GameStage gameStage) {
-
-        this.score = 2;
-
-        this.cash = 0;
-
+        this.cash = 6;
         this.health = 100;
         this.live = 0;
         this.curWave = 0;

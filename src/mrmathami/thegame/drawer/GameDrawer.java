@@ -31,21 +31,21 @@ public final class GameDrawer {
     public static Button back_button = new Button();
     public static Button restart_button = new Button();
     public static Button resume_button = new Button();
-    public static Button select_map_button = new Button();
     public static Button start_menu_button = new Button();
 
     public GameDrawer(GraphicsContext graphicsContext, GameField field) {
         this.graphicsContext = graphicsContext;
         this.gameField = field;
         LoadImage.Map();
+    }
 
+    public void loadButton() {
         GameController.root.getChildren().add(play_button); play_button.setVisible(false);
         GameController.root.getChildren().add(quit_button); quit_button.setVisible(false);
         GameController.root.getChildren().add(start_button); start_button.setVisible(false);
         GameController.root.getChildren().add(back_button); back_button.setVisible(false);
         GameController.root.getChildren().add(restart_button); restart_button.setVisible(false);
         GameController.root.getChildren().add(resume_button); resume_button.setVisible(false);
-        GameController.root.getChildren().add(select_map_button); select_map_button.setVisible((false));
         GameController.root.getChildren().add(start_menu_button); start_menu_button.setVisible((false));
     }
 
@@ -56,7 +56,6 @@ public final class GameDrawer {
         GameController.root.getChildren().remove(back_button); 
         GameController.root.getChildren().remove(restart_button); 
         GameController.root.getChildren().remove(resume_button); 
-        GameController.root.getChildren().remove(select_map_button); 
     }
 
     public void renderStartMenu(){
@@ -81,6 +80,8 @@ public final class GameDrawer {
     }
 
     public void renderSelectMap(){
+        graphicsContext.drawImage(LoadImage.selectMap, 0, 0, Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
+
         graphicsContext.setStroke(Color.YELLOW);
         graphicsContext.setLineWidth(4);
 
@@ -126,16 +127,8 @@ public final class GameDrawer {
         restart_button.setLayoutX(430);
         restart_button.setLayoutY(500);
 
-        select_map_button.setStyle("-fx-background-color: YELLOW");
-        select_map_button.setFont(Font.loadFont("file:src/assets/text/zorque.ttf", 30));
-        select_map_button.setText("Select Map");
-        select_map_button.setMinSize(100, 30);
-        select_map_button.setLayoutX(430);
-        select_map_button.setLayoutY(570);
-
         resume_button.setVisible(true);
-        restart_button.setVisible(true);
-        select_map_button.setVisible(true);
+        quit_button.setVisible(true);
 
     }
 
@@ -194,7 +187,6 @@ public final class GameDrawer {
         } else {
             resume_button.setVisible(false);
             restart_button.setVisible(false);
-            select_map_button.setVisible(false);
         }
 
         if (GameController.isPlay){

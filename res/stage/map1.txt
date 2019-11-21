@@ -30,8 +30,8 @@
 112 64
 864 32
 5
-1 SmallerEnemy RIGHT 10
-1 NormalEnemy RIGHT 8
-1 TankerEnemy RIGHT 5
-3 SmallerEnemy RIGHT 1 NormalEnemy RIGHT 1 TankerEnemy RIGHT 1
+1 SmallerEnemy RIGHT 15
+1 NormalEnemy RIGHT 10
+1 TankerEnemy RIGHT 8
+3 SmallerEnemy RIGHT 10 NormalEnemy RIGHT 8 TankerEnemy RIGHT 5
 1 BossEnemy RIGHT 1

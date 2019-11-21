@@ -4,9 +4,12 @@ import mrmathami.thegame.GameController;
 import mrmathami.thegame.GameField;
 import mrmathami.thegame.GameStage;
 
+import java.util.ArrayList;
+
 public class Wave {
     private float timeSinceLastSpawn, spawnTime;
     private int index;
+    ArrayList<ArrayList<AbstractEnemy>> waves = GameStage.waves;
 
     public Wave(){}
 
@@ -29,12 +32,12 @@ public class Wave {
 
     public void Spawn(){
         System.out.println(GameField.curWave);
-        System.out.println(GameStage.waves.size());
-        if (GameField.curWave <= GameStage.waves.size()) {
+        System.out.println(waves.size());
+        if (GameField.curWave <= waves.size()) {
             if (GameField.curWave <= 0) GameField.curWave = 1;
 
-            if (index < GameStage.waves.get(GameField.curWave - 1).size()){
-                GameField.addEntity(GameStage.waves.get(GameField.curWave - 1).get(index++));
+            if (index < waves.get(GameField.curWave - 1).size()){
+                GameField.addEntity(waves.get(GameField.curWave - 1).get(index++));
             } else if (GameField.live == 0) {
                 GameController.isReady = false;
                 index = 0;

@@ -18,15 +18,17 @@ public class MapDrawer {
 
     private static void drawMap(GraphicsContext gc) {
 
-        for (int i = 0; i < MAP_SPRITES.length; i++) {
-            for (int j = 0; j < MAP_SPRITES[i].length; j++) {
-                int index = Integer.parseInt(MAP_SPRITES[i][j]);
-                gc.drawImage(LoadImage.map[index], j * 32, i * 32, 32, 32);
-                
-                //System.out.print(MAP_SPRITES[i][j] + " ");
+        try {
+            for (int i = 0; i < MAP_SPRITES.length; i++) {
+                for (int j = 0; j < MAP_SPRITES[i].length; j++) {
+                    int index = Integer.parseInt(MAP_SPRITES[i][j]);
+                    gc.drawImage(LoadImage.map[index], j * 32, i * 32, 32, 32);
+
+                    //System.out.print(MAP_SPRITES[i][j] + " ");
+                }
+                //System.out.println();
             }
-            //System.out.println();
-        }
+        } catch (Exception e) {}
         storeDrawer.draw(gc);
         gc.setFill(Color.BLUEVIOLET);
         gc.fillText("MENU", 20,20);

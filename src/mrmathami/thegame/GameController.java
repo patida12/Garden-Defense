@@ -22,7 +22,6 @@ public final class GameController {
     private Canvas canvas;
     public static Group root;
     public static GraphicsContext graphicsContext;
-    public static MouseEvent mouseEvent;
     private Scene gameScene;
     private  AnimationTimer gameLoop;
 
@@ -52,10 +51,6 @@ public final class GameController {
         this.gameScene = new Scene(root);
         this.graphicsContext = canvas.getGraphicsContext2D();
 
-        GameStage _game = new GameStage();
-
-        initGameStage(_game);
-
         // Just a few acronyms.
         final long width = Config.TILE_HORIZONTAL;
         final long height = Config.TILE_VERTICAL;
@@ -71,6 +66,7 @@ public final class GameController {
 
     public void initGameStage(GameStage gameStage){
         GameStage.resetGameStage();
+        game = new GameStage();
         game = gameStage;
         field = new GameField(gameStage);
         wave = new Wave(5);
@@ -95,7 +91,7 @@ public final class GameController {
         isPlay = false;
         isReady = false;
         isMenu = false;
-        GameField.curWave = 0;
+        field.curWave = 0;
     }
 
     public void pauseGame(){
@@ -108,7 +104,10 @@ public final class GameController {
     }
 
     public void startGameLoop() {
+        GameStage _game = new GameStage();
+        initGameStage(_game);
         drawer = new GameDrawer(graphicsContext, field);
+        drawer.loadButton();
         if (isStartMenuGame) {
             showStartMenuGame();
         }
@@ -179,9 +178,8 @@ public final class GameController {
 
         if (posX > 28*32 && posY > 18*32){
             isReady = true;
-            if (GameField.curWave > 0 ) {
-                GameField.curWave++;
-               // System.out.println(GameStage.waves.size());
+            if (field.curWave > 0 ) {
+                field.curWave++;
             }
         }
     }
@@ -196,9 +194,7 @@ public final class GameController {
             GameDrawer.selectGame3 = false;
             isSelected = false;
             System.out.println("1");
-            game1 = GameStage.load("res/stage/map1.txt");
-            game = game1;
-            initGameStage(game1);
+            initGameStage(GameStage.load("res/stage/map1.txt"));
 
             isSelected = true;
         }
@@ -208,9 +204,7 @@ public final class GameController {
             GameDrawer.selectGame3 = false;
             isSelected = false;
             System.out.println("2");
-            game2 = GameStage.load("res/stage/map2.txt");
-            game = game2;
-            initGameStage(game2);
+            initGameStage(GameStage.load("res/stage/map2.txt"));
 
             isSelected = true;
         }
@@ -220,9 +214,7 @@ public final class GameController {
             GameDrawer.selectGame3 = true;
             isSelected = false;
             System.out.println("3");
-            game3 = GameStage.load("res/stage/map3.txt");
-            game = game3;
-            initGameStage(game3);
+            initGameStage(GameStage.load("res/stage/map3.txt"));
 
             isSelected = true;
         }
@@ -274,17 +266,13 @@ public final class GameController {
                 graphicsContext.setGlobalAlpha(1);
                 stopGame();
 
-                GameStage.getNewgame();
-                initGameStage(GameStage.load("res/stage/map1.txt"));
-                playGame();
+                GameStage _game = new GameStage();
+                initGameStage(_game);
+                drawer = new GameDrawer(graphicsContext, field);
+                showStartMenuGame();
+
             });
 
-            GameDrawer.select_map_button.setOnMousePressed(mouseEvent1 -> {
-                GameDrawer.select_map_button.setEffect(GameDrawer.shadow);
-                graphicsContext.setGlobalAlpha(1);
-                stopGame();
-                showSelectMap();
-            });
         }
     }
 
@@ -294,7 +282,6 @@ public final class GameController {
             LoadImage.musicWinPlayer.play();
             GameDrawer.start_menu_button.setOnMousePressed(mouseEvent2 -> {
                 GameDrawer.start_menu_button.setEffect(GameDrawer.shadow);
-                //game = new GameStage();
                 GameDrawer.start_menu_button.setVisible(false);
                 stopGame();
                 initGameStage(GameStage.load("res/stage/map1.txt"));

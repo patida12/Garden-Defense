@@ -39,6 +39,7 @@ public class GameStage {
         this.isWin = false;
         this.isGameOver = false;
         this.star = 0;
+
         this.stage = Config.IS_RUNNING;
         this.width = Config.SCREEN_WIDTH;
         this.height = Config.SCREEN_HEIGHT;
@@ -63,6 +64,14 @@ public class GameStage {
                  * Load Map
                  * map 20 x 30
                  */
+                for (int i = 0; i < Config.TILE_VERTICAL; i++) {
+                    for (int j = 0; j < Config.TILE_HORIZONTAL; j++) {
+                        Map[i][j] = null;
+                    }
+                }
+                _grass.clear();
+                _road.clear();
+                hashMap.clear();
                 for (int i = 0; i < Config.TILE_VERTICAL; i++){
                     String[] _row = scanner.nextLine().split("\\s");
                     for (int j = 0; j < Config.TILE_HORIZONTAL; j++) {
@@ -85,10 +94,12 @@ public class GameStage {
                 /**
                  * Load Path
                  */
+                ArrayList<Point> _path = new ArrayList<Point>();
                 final int numOfPoint = scanner.nextInt();
                 for (int i = 0; i < numOfPoint; i++){
-                    path.add(new Point(scanner.nextInt(), scanner.nextInt()));
+                    _path.add(new Point(scanner.nextInt(), scanner.nextInt()));
                 }
+                path = _path;
 
                 /**
                  * Load Entities
@@ -102,6 +113,7 @@ public class GameStage {
                 final int yTarget = scanner.nextInt();
                 _road.add(new Garden(xTarget, yTarget));
 
+                ArrayList<ArrayList<AbstractEnemy>> _waves = new ArrayList<>();
                 final int numOfLine = scanner.nextInt();
                 for (int i = 0; i < numOfLine; i++) {
                     final int number = scanner.nextInt();
@@ -130,10 +142,10 @@ public class GameStage {
         //						throw new InputMismatchException("Unexpected value! Input value: " + value);
                         }
                     }
-                    waves.add(_enemies);
+                    _waves.add(_enemies);
 
                 }
-
+                waves = _waves;
                 return new GameStage();
             } catch (NoSuchElementException e) {
                 throw new IOException("Resource invalid! Resource name: " + name, e);
@@ -193,6 +205,7 @@ public class GameStage {
 
     public static void resetGameStage() {
         try {
+            GameController.game = getNewgame();
             GameField.entities.removeAll(GameField.entities);
         } catch (Exception e){}
     }

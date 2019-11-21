@@ -13,13 +13,13 @@ public abstract class AbstractTower extends AbstractTile {
     protected Circle rangeCircle = new Circle();
     RectangleDrawer drawer = new RectangleDrawer();
     boolean isClicked = false;
-    long attackDamage;                       // Determines amount of health to reduce from monsters per attack
-    double attackSpeed;                     // Determines the time a tower must wait after an attack
-    double attackRange;                        // Sets the minimum range the tower can make attacks in
-    int upgradeTime;                        // Time in milliseconds it takes to complete an upgrade.
-    int upgradeCost;                        // Determines the resource cost to upgrade the tower
+    long attackDamage;
+    double attackSpeed;
+    double attackRange;
+    int upgradeTime;
+    int upgradeCost;
     int sellCost;
-    Point point;                            // Represents the coordinates of the tower on the map
+    Point point;
 
     public AbstractTower(double x , double y){
         super(x, y);

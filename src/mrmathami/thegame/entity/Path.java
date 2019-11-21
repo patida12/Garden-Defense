@@ -6,12 +6,9 @@ import mrmathami.thegame.GameStage;
 public class Path {
     public static final Point[] path = GameStage.path.toArray(new Point[GameStage.path.size()]);
 
+
     public static void drawPath(GraphicsContext graphicsContext) {
 
-        for(Point point : path) {
-           // graphicsContext.setFill(Color.RED);
-           // graphicsContext.fillOval(point.getTileX(), point.getTileY(),10, 10);
-        }
     }
 
 }

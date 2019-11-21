@@ -32,6 +32,7 @@ public class LoadImage {
     public static Image map1 = new Image("file:src/assets/images/map1.png");
     public static Image map2 = new Image("file:src/assets/images/map2.png");
     public static Image map3 = new Image("file:src/assets/images/map3.png");
+    public static Image selectMap = new Image("file:src/assets/images/selectMap.jpg");
     public static String musicSMPath = "C:\\Users\\User\\Documents\\GitHub\\thegame-master\\Garden-Defense\\src\\assets\\sound\\music.mp3";
     public static String musicPlayPath = "C:\\Users\\User\\Documents\\GitHub\\thegame-master\\Garden-Defense\\src\\assets\\sound\\play.mp3";
     public static String musicWinPath = "C:\\Users\\User\\Documents\\GitHub\\thegame-master\\Garden-Defense\\src\\assets\\sound\\victoryff.swf.mp3";

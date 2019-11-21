@@ -8,27 +8,6 @@ public class Point {
         this.x = x;
         this.y = y;
     }
-/*
-    public Point(double x , double y){
-        this.x = (int)(x / 64);
-        this.y = (int)(y / 64);
-    }
-
-    public int getTileX(){
-        return x;
-    }
-    public int getTileY(){
-        return y;
-    }
-
-    public int getExactX(){
-        return x * 64 + 32;
-    }
-
-    public int getExactY(){
-        return y * 64 + 32;
-    }
-*/
 
     public Point(double x , double y){
         this.x = (int)(x );

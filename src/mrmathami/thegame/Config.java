@@ -78,7 +78,7 @@ public final class Config {
 	//region Bullet
 	public static final long NORMAL_BULLET_TTL = 30;
 	public static final long NORMAL_BULLET_STRENGTH = 5;
-	public static final double NORMAL_BULLET_SPEED =  1 * GAME_SPEED;
+	public static final double NORMAL_BULLET_SPEED =  5 * GAME_SPEED;
 
 	public static final long MACHINE_GUN_BULLET_TTL = 15;
 	public static final long MACHINE_GUN_BULLET_STRENGTH = 10;
@@ -116,7 +116,7 @@ public final class Config {
 	public static final int ENEMY_DURATION_SPAWN = 10 / GAME_SPEED;
 
 	public static final double NORMAL_ENEMY_SIZE = 0.9;
-	public static final long NORMAL_ENEMY_HEALTH = 30;
+	public static final long NORMAL_ENEMY_HEALTH = 40;
 	public static final long NORMAL_ENEMY_ARMOR = 2;
 	public static final double NORMAL_ENEMY_SPEED = 1.5 * GAME_SPEED;
 	public static final long NORMAL_ENEMY_REWARD = 1;
@@ -128,13 +128,13 @@ public final class Config {
 	public static final long SMALLER_ENEMY_REWARD = 2;
 
 	public static final double TANKER_ENEMY_SIZE = 1.1;
-	public static final long TANKER_ENEMY_HEALTH = 40;
+	public static final long TANKER_ENEMY_HEALTH = 50;
 	public static final long TANKER_ENEMY_ARMOR = 5;
 	public static final double TANKER_ENEMY_SPEED = 0.7 * GAME_SPEED;
 	public static final long TANKER_ENEMY_REWARD = 3;
 
 	public static final double BOSS_ENEMY_SIZE = 1.3;
-	public static final long BOSS_ENEMY_HEALTH = 50;
+	public static final long BOSS_ENEMY_HEALTH = 100;
 	public static final long BOSS_ENEMY_ARMOR = 8;
 	public static final double BOSS_ENEMY_SPEED = 0.4 * GAME_SPEED;
 	public static final long BOSS_ENEMY_REWARD = 10;

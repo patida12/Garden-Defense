@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public final class GameField {
     @Nonnull public static  ArrayList<AbstractEntity> entities = new ArrayList<AbstractEntity>();
     public static int cash;
-    public static int  health;
+    public static int health;
     public static int live;
     public static int curWave = 0;
     private final double width;
@@ -22,9 +22,6 @@ public final class GameField {
         this.curWave = 0;
         this.width = gameStage.getWidth();
         this.height = gameStage.getHeight();
-        try {
-            entities.clear();
-        } catch (Exception e){}
         entities.addAll(gameStage._grass);
         entities.addAll(gameStage._road);
 

@@ -20,8 +20,11 @@ public final class GameDrawer {
     @Nonnull private GameField gameField = new GameField(new GameStage());
     FieldDrawer fieldDrawer = new FieldDrawer();
 
+    public static boolean selectGame1 = false;
+    public static boolean selectGame2 = false;
+    public static boolean selectGame3 = false;
+
     public static DropShadow shadow = new DropShadow();
-    //public static ArrayList<Node> = new ArrayList<Node>();
     public static Button play_button = new Button();
     public static Button quit_button = new Button();
     public static Button start_button = new Button();
@@ -78,10 +81,15 @@ public final class GameDrawer {
     }
 
     public void renderSelectMap(){
+        graphicsContext.setStroke(Color.YELLOW);
+        graphicsContext.setLineWidth(4);
 
         graphicsContext.drawImage(LoadImage.map1,5,300);
         graphicsContext.drawImage(LoadImage.map2,380,300);
         graphicsContext.drawImage(LoadImage.map3,700,300);
+
+
+
 
         start_button.setStyle("-fx-background-color: YELLOW");
         start_button.setFont(Font.loadFont("file:src/assets/text/zorque.ttf", 30));

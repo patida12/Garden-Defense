@@ -7,8 +7,10 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import mrmathami.thegame.drawer.GameDrawer;
+import mrmathami.thegame.drawer.LoadImage;
 import mrmathami.thegame.entity.enemy.Wave;
 import mrmathami.thegame.entity.tile.tower.BuyTower;
 
@@ -68,6 +70,7 @@ public final class GameController {
     }
 
     public void initGameStage(GameStage gameStage){
+        GameStage.resetGameStage();
         game = gameStage;
         field = new GameField(gameStage);
         wave = new Wave(5);
@@ -113,6 +116,9 @@ public final class GameController {
     }
 
     public void playGame() {
+        LoadImage.musicSMPlayer.pause();
+        LoadImage.musicPlayPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        LoadImage.musicPlayPlayer.play();
         isPlay = true;
         canvas.setOnMousePressed(this::handleEvent);
 
@@ -148,6 +154,12 @@ public final class GameController {
         isStartMenuGame = true;
         drawer.render();
 
+        try {
+            LoadImage.musicWinPlayer.pause();
+        } catch (Exception e) {}
+        LoadImage.musicSMPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        LoadImage.musicSMPlayer.play();
+
         GameDrawer.play_button.setOnMousePressed(mouseEvent2 -> {
             GameDrawer.play_button.setEffect(GameDrawer.shadow);
             isStartMenuGame = false;
@@ -177,7 +189,11 @@ public final class GameController {
     public void selectMap(MouseEvent mouseEvent){
         double posX = mouseEvent.getX();
         double posY = mouseEvent.getY();
-        if (!isSelected &&posX < 320) {
+
+        if (!isSelected && posX < 320) {
+            GameDrawer.selectGame1 = true;
+            GameDrawer.selectGame2 = false;
+            GameDrawer.selectGame3 = false;
             isSelected = false;
             System.out.println("1");
             game1 = GameStage.load("res/stage/map1.txt");
@@ -187,6 +203,9 @@ public final class GameController {
             isSelected = true;
         }
         if (!isSelected && posX > 320 && posX < 640) {
+            GameDrawer.selectGame1 = false;
+            GameDrawer.selectGame2 = true;
+            GameDrawer.selectGame3 = false;
             isSelected = false;
             System.out.println("2");
             game2 = GameStage.load("res/stage/map2.txt");
@@ -196,6 +215,9 @@ public final class GameController {
             isSelected = true;
         }
         if (!isSelected && posX >= 640) {
+            GameDrawer.selectGame1 = false;
+            GameDrawer.selectGame2 = false;
+            GameDrawer.selectGame3 = true;
             isSelected = false;
             System.out.println("3");
             game3 = GameStage.load("res/stage/map3.txt");
@@ -204,6 +226,9 @@ public final class GameController {
 
             isSelected = true;
         }
+        if (GameDrawer.selectGame1) graphicsContext.strokeRoundRect(5, 300, 205, 130, 10,10);
+        if (GameDrawer.selectGame2) graphicsContext.strokeRoundRect(380, 300, 205, 130, 10,10);
+        if (GameDrawer.selectGame3) graphicsContext.strokeRoundRect(700, 300, 205, 130, 10,10);
     }
 
     public void showSelectMap(){
@@ -215,7 +240,7 @@ public final class GameController {
         GameDrawer.start_button.setOnMousePressed(mouseEvent2 -> {
             GameDrawer.start_button.setEffect(GameDrawer.shadow);
             isSelectMap = false;
-            playGame();
+            if (isSelected) playGame();
         });
 
         GameDrawer.back_button.setOnMousePressed(mouseEvent2 -> {
@@ -265,6 +290,8 @@ public final class GameController {
 
     public void showGameOver() {
         if (game.isGameOver()) {
+            LoadImage.musicPlayPlayer.pause();
+            LoadImage.musicWinPlayer.play();
             GameDrawer.start_menu_button.setOnMousePressed(mouseEvent2 -> {
                 GameDrawer.start_menu_button.setEffect(GameDrawer.shadow);
                 //game = new GameStage();

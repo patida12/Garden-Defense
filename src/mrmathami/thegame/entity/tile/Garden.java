@@ -1,7 +1,6 @@
 package mrmathami.thegame.entity.tile;
 
 import javafx.scene.canvas.GraphicsContext;
-import mrmathami.thegame.drawer.LoadImage;
 
 public final class Garden extends Road {
     private int health;
@@ -13,7 +12,7 @@ public final class Garden extends Road {
 
     @Override
     public void draw(GraphicsContext graphicsContext) {
-        graphicsContext.drawImage(LoadImage.target, getX(), getY());
+       // graphicsContext.drawImage(LoadImage.target, getX(), getY());
     }
 
 

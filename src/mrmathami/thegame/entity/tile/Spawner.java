@@ -2,7 +2,6 @@ package mrmathami.thegame.entity.tile;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import mrmathami.thegame.drawer.LoadImage;
 
 public final class Spawner extends Road{
 
@@ -12,7 +11,7 @@ public final class Spawner extends Road{
 
     @Override
     public void draw(GraphicsContext graphicsContext) {
-        graphicsContext.drawImage(LoadImage.spawner, getX() -16, getY() - 32, 32 * 2, 32 * 2);
+        //graphicsContext.drawImage(LoadImage.spawner, getX() -16, getY() - 32, 32 * 2, 32 * 2);
     }
 
     @Override

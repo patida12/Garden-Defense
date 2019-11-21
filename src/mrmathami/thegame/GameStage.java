@@ -191,4 +191,11 @@ public class GameStage {
         this.stage = stage;
     }
 
+    public static void resetGameStage() {
+        try {
+            GameField.entities.removeAll(GameField.entities);
+        } catch (Exception e){}
+    }
+
+
 }

@@ -37,7 +37,6 @@ public class TankerEnemy extends AbstractEnemy {
             Point nextWayPoint = getNextWayPoint();
             if (nextWayPoint == null) {
                 setPathFinished(true);
-                super.isDead = true;
                 return;
             }
 
@@ -73,9 +72,12 @@ public class TankerEnemy extends AbstractEnemy {
                     break;
             }
         }
-        if (this.isPathFinished()) GameField.health -= Config.TANKER_ENEMY_REWARD;
-        if (this.isDead() || this.isPathFinished()) {
-            GameField.score += this.reward;
+        if (this.isPathFinished()) {
+            GameField.health -= this.reward;
+            onDestroy();
+        }
+        if (this.isDead()) {
+            if(GameField.live != 0) GameField.cash += this.reward;
             onDestroy();
         }
     }

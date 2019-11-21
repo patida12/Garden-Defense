@@ -2,10 +2,10 @@ package mrmathami.thegame;
 
 import mrmathami.thegame.entity.Point;
 import mrmathami.thegame.entity.enemy.*;
+import mrmathami.thegame.entity.tile.Garden;
 import mrmathami.thegame.entity.tile.Mountain;
 import mrmathami.thegame.entity.tile.Road;
 import mrmathami.thegame.entity.tile.Spawner;
-import mrmathami.thegame.entity.tile.Garden;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -17,10 +17,14 @@ import java.util.*;
 
 public class GameStage {
     private static GameStage playerGame;
+    public static boolean isWin = false;
+    public static boolean isGameOver = false;
+    public static int star = 0;
     private int stage;
     private long width;
     private long height;
-    @Nonnull public static ArrayList<AbstractEnemy> _enemies = new ArrayList<AbstractEnemy>();
+
+    @Nonnull public static ArrayList<ArrayList<AbstractEnemy>> waves = new ArrayList<>();
     @Nonnull public static ArrayList<Mountain> _grass = new ArrayList<Mountain>();
     @Nonnull public static ArrayList<Road> _road = new ArrayList<Road>();
 
@@ -32,6 +36,9 @@ public class GameStage {
     private Target target;
 
     public GameStage() {
+        this.isWin = false;
+        this.isGameOver = false;
+        this.star = 0;
         this.stage = Config.IS_RUNNING;
         this.width = Config.SCREEN_WIDTH;
         this.height = Config.SCREEN_HEIGHT;
@@ -86,40 +93,47 @@ public class GameStage {
                 /**
                  * Load Entities
                  */
-                final int numOfLine = scanner.nextInt();
+                // Spawner
                 final int x = scanner.nextInt();
                 final int y = scanner.nextInt();
+                _road.add(new Spawner(x, y));
+                //Garden
+                final int xTarget = scanner.nextInt();
+                final int yTarget = scanner.nextInt();
+                _road.add(new Garden(xTarget, yTarget));
 
+                final int numOfLine = scanner.nextInt();
                 for (int i = 0; i < numOfLine; i++) {
-                    final String value = scanner.next();
-                    if ("Spawner".equals(value)) {
-                        _road.add(new Spawner(x, y));
-                    } else if ("NormalEnemy".equals(value)) {
-                        final String direction = scanner.next();
-                        int numOfSpawn = scanner.nextInt();
-                        while(--numOfSpawn >= 0) _enemies.add(new NormalEnemy(x, y, direction, numOfSpawn));
-                    } else if ("SmallerEnemy".equals(value)) {
-                        final String direction = scanner.next();
-                        int numOfSpawn = scanner.nextInt();
-                        while(--numOfSpawn >= 0) _enemies.add(new SmallerEnemy(x, y, direction, numOfSpawn));
-                    } else if ("TankerEnemy".equals(value)) {
-                        final String direction = scanner.next();
-                        int numOfSpawn = scanner.nextInt();
-                        while(--numOfSpawn >= 0) _enemies.add(new TankerEnemy(x, y, direction, numOfSpawn));
-                    } else if ("BossEnemy".equals(value)) {
-                        final String direction = scanner.next();
-                        int numOfSpawn = scanner.nextInt();
-                        while(--numOfSpawn >= 0) _enemies.add(new BossEnemy(x, y, direction, numOfSpawn));
-                    } else if ("Target".equals(value)) {
-                        final int xTarget = scanner.nextInt();
-                        final int yTarget = scanner.nextInt();
-                        _road.add(new Garden(xTarget, yTarget));
-                    }else {
-                        System.out.println("Unexpected value! Input value: " + value);
-                        scanner.nextLine();
-    //						throw new InputMismatchException("Unexpected value! Input value: " + value);
+                    final int number = scanner.nextInt();
+                    ArrayList<AbstractEnemy> _enemies = new ArrayList<AbstractEnemy>();
+                    for (int j = 0; j < number; j++) {
+                        final String value = scanner.next();
+                        if ("NormalEnemy".equals(value)) {
+                            final String direction = scanner.next();
+                            int numOfSpawn = scanner.nextInt();
+                            while(--numOfSpawn >= 0) _enemies.add(new NormalEnemy(x, y, direction, numOfSpawn));
+                        } else if ("SmallerEnemy".equals(value)) {
+                            final String direction = scanner.next();
+                            int numOfSpawn = scanner.nextInt();
+                            while(--numOfSpawn >= 0) _enemies.add(new SmallerEnemy(x, y, direction, numOfSpawn));
+                        } else if ("TankerEnemy".equals(value)) {
+                            final String direction = scanner.next();
+                            int numOfSpawn = scanner.nextInt();
+                            while(--numOfSpawn >= 0) _enemies.add(new TankerEnemy(x, y, direction, numOfSpawn));
+                        } else if ("BossEnemy".equals(value)) {
+                            final String direction = scanner.next();
+                            int numOfSpawn = scanner.nextInt();
+                            while(--numOfSpawn >= 0) _enemies.add(new BossEnemy(x, y, direction, numOfSpawn));
+                        } else {
+                            System.out.println("Unexpected value! Input value: " + value);
+                            scanner.nextLine();
+        //						throw new InputMismatchException("Unexpected value! Input value: " + value);
+                        }
                     }
+                    waves.add(_enemies);
+
                 }
+
                 return new GameStage();
             } catch (NoSuchElementException e) {
                 throw new IOException("Resource invalid! Resource name: " + name, e);
@@ -128,6 +142,26 @@ public class GameStage {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public boolean isGameOver(){
+        if (GameField.health <= 0) {
+            isWin = false;
+            isGameOver = true;
+            this.stage = Config.IS_STOPPED;
+            return true;
+        }
+        if (GameField.curWave > waves.size() && GameField.live == 0) {
+            isWin = true;
+            if (GameField.health < 50) star = 1;
+            else if (GameField.health < 90) star = 2;
+            else star = 3;
+            isGameOver = true;
+            this.stage = Config.IS_STOPPED;
+            return true;
+        }
+        isGameOver = false;
+        return false;
     }
 
     public boolean isPaused(){
@@ -156,5 +190,12 @@ public class GameStage {
     public void setStage(int stage) {
         this.stage = stage;
     }
+
+    public static void resetGameStage() {
+        try {
+            GameField.entities.removeAll(GameField.entities);
+        } catch (Exception e){}
+    }
+
 
 }

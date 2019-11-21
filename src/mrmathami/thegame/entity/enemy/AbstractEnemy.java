@@ -33,7 +33,7 @@ public abstract class AbstractEnemy extends AbstractEntity {
 
     public void takeDamage(int damge) {
         health = health - damge;
-        if (health <= 0) {
+        if (health < 0) {
             isDead = true;
             pathFinished = false;
         }
